@@ -7,7 +7,8 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-// 회원가입 완료 후 클라이언트에게 응답할 데이터를 담는 객체
+// 회원가입 완료 후 클라이언트에게 응답할 데이터를 담는 객체 ( 클라이언트 <---- DB )
+
 @Getter @Setter @ToString
 @NoArgsConstructor
 @AllArgsConstructor

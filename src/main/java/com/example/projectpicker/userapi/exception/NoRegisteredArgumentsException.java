@@ -2,6 +2,7 @@ package com.example.projectpicker.userapi.exception;
 
 import lombok.NoArgsConstructor;
 @NoArgsConstructor
+//회원가입시 가입 정보가 없을 경우 예외처리
 
 public class NoRegisteredArgumentsException extends RuntimeException{
 

@@ -23,7 +23,7 @@ public class UserService {
 
 //    private final TokenProvider tokenProvider;
 
-    // 회원가입처리
+    // 회원가입 처리 PART
     public UserSignUpResponseDTO create(final UserSignUpDTO userSignUpDTO){ //final 키워드: 클래스나 변수에 final을 붙이면 처음 정의된 상태가 변하지 않는 것을 보장한다는 의미
 
         // 가입정보가 null 일때

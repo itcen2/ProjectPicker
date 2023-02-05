@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode(of = "email") // email 만 비교해라. 굳이 비번,이름까지 비교할 필요x
 @Builder
 
-// 회원가입시 클라이언트가 보낸 데이터를 담는 객체
+// 회원가입시 클라이언트가 보낸 데이터를 담는 객체 ( 클라이언트 ----> DB )
 public class UserSignUpDTO {
 
     @NotBlank // null 과 ""(empty), " "(blank) 모두 허용하지 않음.

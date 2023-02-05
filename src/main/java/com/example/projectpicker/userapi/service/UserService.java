@@ -1,5 +1,7 @@
 package com.example.projectpicker.userapi.service;
 
+import com.example.projectpicker.security.TokenProvider;
+import com.example.projectpicker.userapi.dto.LoginResponseDTO;
 import com.example.projectpicker.userapi.dto.UserSignUpDTO;
 import com.example.projectpicker.userapi.dto.UserSignUpResponseDTO;
 import com.example.projectpicker.userapi.entity.UserEntity;
@@ -21,7 +23,7 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-//    private final TokenProvider tokenProvider;
+    private final TokenProvider tokenProvider;
 
     // 회원가입 처리 PART
     public UserSignUpResponseDTO create(final UserSignUpDTO userSignUpDTO){ //final 키워드: 클래스나 변수에 final을 붙이면 처음 정의된 상태가 변하지 않는 것을 보장한다는 의미
@@ -50,9 +52,30 @@ public class UserService {
         return new UserSignUpResponseDTO(savedUser); // 클라이언트에게 응답결과에는 savedUSer(암호처리된) 정보 반환
     }
 
+    // 로그인 검증(이메일,비밀번호) PART
+    public LoginResponseDTO getByCredentials(final String email, final String rawPassword){
+
+        // 입력한 이메일을 통해 회원정보 조회
+        UserEntity originalUser = userRepository.findByEmail(email); // 이메일로 조회된 회원을 originUser 에 담음.
 
 
+        // email 조회된 회원이 null 일때(없을 때)
+        if(originalUser == null) {
+            throw new RuntimeException("가입된 회원이 아닙니다.");
+        }
 
+        // 비밀번호 검증
+        if(!passwordEncoder.matches(rawPassword,originalUser.getPassword())){
+            throw new RuntimeException("비밀번호가 틀렸습니다.");
+        }
+
+        //로그인 성공시 로그 출력
+        log.info("{}님 로그인 성공",originalUser.getUserName());
+
+        // 토큰 발급
+        String token = tokenProvider.createToken(originalUser);
+        return new LoginResponseDTO(originalUser, token);
+    }
 
 }
 

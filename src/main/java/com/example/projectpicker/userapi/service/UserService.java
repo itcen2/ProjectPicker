@@ -52,6 +52,16 @@ public class UserService {
         return new UserSignUpResponseDTO(savedUser); // 클라이언트에게 응답결과에는 savedUSer(암호처리된) 정보 반환
     }
 
+
+    //이메일 중복확인
+    public boolean isDuplicate(String email){
+        if (email == null){
+            throw new RuntimeException("이메일 값이 없습니다.");
+        }
+        return userRepository.existsByEmail(email);
+    }
+
+
     // 로그인 검증(이메일,비밀번호) PART
     public LoginResponseDTO getByCredentials(final String email, final String rawPassword){
 

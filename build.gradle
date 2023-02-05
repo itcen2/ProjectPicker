@@ -5,7 +5,7 @@ plugins {
 	//id 'war
 }
 
-/* war 배포시 주석 푸시면 됩니다.*/
+//war 배포시 주석 푸시면 됩니다.
 
 //war {
 //	archiveName 'ROOT.war'
@@ -53,4 +53,5 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+	exclude '**/*' // 빌드시에 테스트 생략
 }

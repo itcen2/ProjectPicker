@@ -23,12 +23,12 @@ public class UserController {
     private final UserService userService;
 
     // 회원 가입 요청 처리
-
+    // Postman (localhost:8080/auth/signup) --POST
     @PostMapping("/signup")
     public ResponseEntity<?> signup(
             @Validated @RequestBody UserSignUpDTO signUpDTO, BindingResult result
             ){
-        log.info("/api/auth/signup POST - {}", signUpDTO);
+        log.info("/auth/signup POST - {}", signUpDTO);
 
         if (result.hasErrors()){
             log.warn(result.toString());
@@ -53,9 +53,9 @@ public class UserController {
                     .body(e.getMessage());
         }
     }
-    // 이메일 중복 확인 요청 처리
-    // GET : /api/auth/check?email=abc@bbb.com
 
+    // 이메일 중복 확인 요청 처리
+    // Postman (localhost:8080/auth/check?email=test@naver.com )--GET
     @GetMapping("/check")
     public ResponseEntity<?> checkEmail(String email){
         if(email == null || email.trim().equals("")){
@@ -67,7 +67,10 @@ public class UserController {
         log.info("{} 중복 여부?? - {}", email, flag);
         return ResponseEntity.ok().body(flag);
     }
+
+
     // 로그인 요청 처리
+    // Postman (localhost:8080/auth/signin )--POST
     @PostMapping("/signin")
     public ResponseEntity<?> signIn(
             @Validated @RequestBody LoginRequestDTO requestDTO) {

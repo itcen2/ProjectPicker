@@ -1,6 +1,7 @@
 package com.example.projectpicker.postapi.entity;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -52,4 +53,7 @@ public class PostEntity {
 
     @OneToMany(mappedBy = "post")
     private List<HashTagEntity> hashTags;
+
+    @Column
+    private boolean allow;
 }

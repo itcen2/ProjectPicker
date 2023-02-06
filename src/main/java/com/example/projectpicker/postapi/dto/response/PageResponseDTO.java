@@ -3,6 +3,7 @@ package com.example.projectpicker.postapi.dto.response;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.domain.Page;
 
 // 클라이언트에게 응답할 페이지 정보.
 /* 예시
@@ -29,7 +30,7 @@ public class PageResponseDTO {
     //페이지 개수 설정
     private static final int PAGE_COUNT = 10;
 
-    public PageResponseDTO(page<T> pageData){
+    public PageResponseDTO(Page<T> pageData){
         this.totalCount = (int) pageData.getTotalElements();
         this.currentPage = pageData.getPageable().getPageNumber() + 1;
         this.endPage = (int) (Math.ceil((double) currentPage) / (PAGE_COUNT) * PAGE_COUNT);

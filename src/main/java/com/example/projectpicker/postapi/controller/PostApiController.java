@@ -121,6 +121,21 @@ public class PostApiController {
                     .internalServerError()
                     .body(e.getMessage());
         }
+    }
 
+    // 게시물 삭제
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<?> remove(@PathVariable String postId) {
+        try {
+            postService.delete(postId);
+            return ResponseEntity
+                    .ok()
+                    .body("Delete Success");
+        } catch (RuntimeException e) {
+            log.error("delete fail : caused by - {}", e.getMessage());
+            return ResponseEntity
+                    .internalServerError()
+                    .body(e.getMessage());
+        }
     }
 }

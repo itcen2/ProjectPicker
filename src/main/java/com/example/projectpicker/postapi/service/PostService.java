@@ -126,4 +126,10 @@ public class PostService {
         PostEntity modifyPost = postRepository.save(entity);
         return new PostDetailResponseDTO(modifyPost);
     }
+
+    // 삭제 중간처리
+    public void delete(final String  postId)
+            throws RuntimeException {
+        postRepository.deleteById(postId);
+    }
 }

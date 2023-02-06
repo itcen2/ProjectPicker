@@ -6,7 +6,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-// 게시판 응답 DTO ( 클라이언트 <---- DB )
+// 게시글 내부 응답 DTO ( 클라이언트 <---- DB )
 @Setter @Getter @ToString
 @NoArgsConstructor
 @AllArgsConstructor

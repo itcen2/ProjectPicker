@@ -2,6 +2,7 @@ package com.example.projectpicker.postapi.service;
 
 import com.example.projectpicker.postapi.dto.request.PageRequestDTO;
 import com.example.projectpicker.postapi.dto.response.PageResponseDTO;
+import com.example.projectpicker.postapi.dto.response.PostDetailResponseDTO;
 import com.example.projectpicker.postapi.dto.response.PostListResponseDTO;
 import com.example.projectpicker.postapi.dto.response.PostResponseDTO;
 import com.example.projectpicker.postapi.entity.HashTagEntity;
@@ -60,4 +61,17 @@ public class PostService {
 
         return listResponseDTO;
     }
+
+    // 개별 조회 중간처리
+    public PostDetailResponseDTO getDetail(String postId) {
+        PostEntity post = postRepository
+                .findById(postId)
+                .orElseThrow(() ->
+                        new RuntimeException("게시물이 존재하지 않음!!"));
+
+        // 엔터티를 DTO로 변환
+        return new PostDetailResponseDTO(post);
+    }
+
+    // 게시글 등록 중간처리
 }

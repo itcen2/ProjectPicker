@@ -4,6 +4,7 @@ package com.example.projectpicker.postapi.controller;
 import com.example.projectpicker.postapi.dto.request.PageRequestDTO;
 import com.example.projectpicker.postapi.dto.request.PageRequestDTO;
 import com.example.projectpicker.postapi.dto.request.PostCreateRequestDTO;
+import com.example.projectpicker.postapi.dto.response.PostDetailResponseDTO;
 import com.example.projectpicker.postapi.dto.response.PostListResponseDTO;
 import com.example.projectpicker.postapi.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,26 @@ public class PostController {
 
     }
 
+    // 게시글 개별 조회
+    @GetMapping("/{postId}")
+    public ResponseEntity<?> detail(@PathVariable String postId) {
+        log.info("/projectpicker/{} GET request", postId);
+
+        try {
+            PostDetailResponseDTO dto = postService.getDetail(postId);
+
+            return ResponseEntity
+                    .ok()
+                    .body(dto)
+                    ;
+        } catch (Exception e) {
+            return ResponseEntity
+                    .notFound()
+                    .build();
+        }
+
+    }
+
     // 프로젝트 모집 게시글 요청
     @PostMapping
     public ResponseEntity<?> createPost(
@@ -71,4 +92,6 @@ public class PostController {
                 .ok()
                 .body(requestDTO);
     }
+
+
 }

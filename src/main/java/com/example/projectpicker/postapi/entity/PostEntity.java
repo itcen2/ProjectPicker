@@ -51,6 +51,5 @@ public class PostEntity {
     private String userEmail;
 
     @OneToMany(mappedBy = "post")
-    @Builder.Default
-    private List<HashTagEntity> hashTags = new ArrayList<>();
+    private List<HashTagEntity> hashTags;
 }

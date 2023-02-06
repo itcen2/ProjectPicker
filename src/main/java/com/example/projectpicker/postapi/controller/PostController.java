@@ -88,10 +88,18 @@ public class PostController {
                     .body(fieldErrors);
         }
 
-        return ResponseEntity
-                .ok()
-                .body(requestDTO);
+        try {
+            PostDetailResponseDTO responseDTO = postService.insert(requestDTO);
+            return ResponseEntity
+                    .ok()
+                    .body(responseDTO);
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                    .internalServerError()
+                    .body(e.getMessage());
+        }
+
+
+
     }
-
-
 }

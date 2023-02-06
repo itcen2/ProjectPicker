@@ -1,5 +1,6 @@
 package com.example.projectpicker.postapi.entity;
 
+import com.example.projectpicker.userapi.entity.UserEntity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -36,8 +37,18 @@ public class PostEntity {
     private LocalDateTime modifyDate; // 게시글 수정 시간
 
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id",insertable=false,updatable=false)
-//    private String user_Id; // 회원 식별
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id",insertable = false,updatable = false)
+    private UserEntity user;
+
+    @Column(name = "user_id")
+    private String user_Id; // 회원 식별
+
+    @Column(name = "user_email")
+    private String email;
+
+    @Column(name = "user_name")
+    private String userName;
 
 }

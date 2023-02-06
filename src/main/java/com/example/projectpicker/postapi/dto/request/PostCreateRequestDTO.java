@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 
 // 게시판 생성 버튼 클릭시 (클라이언트 ---> DB)
@@ -25,11 +26,13 @@ public class PostCreateRequestDTO {
     @NotBlank
     private String content; // 게시판 내용
 
-    
-    // DTO를 엔티티로 변환
-    public PostEntity toEntity(){
+    private List<String> hashTags;
+
+    public PostEntity toEntity() {
         return PostEntity.builder()
-                .title(this.title)
+                .postTitle(this.title)
+                .postContent(this.content)
                 .build();
     }
 }
+

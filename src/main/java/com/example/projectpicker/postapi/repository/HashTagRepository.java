@@ -1,7 +1,7 @@
 package com.example.projectpicker.postapi.repository;
 
-import com.example.projectpicker.postapi.entity.HashtagEntity;
+import com.example.projectpicker.postapi.entity.HashTagEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface HashTagRepository extends JpaRepository<HashtagEntity,Long> {
+public interface HashTagRepository extends JpaRepository<HashTagEntity,Long> {
 }

@@ -1,5 +1,4 @@
 package com.example.projectpicker.postapi.dto.response;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,7 +16,7 @@ import org.springframework.data.domain.Page;
     }
  */
 @Setter @Getter @ToString
-public class PageResponseDTO {
+public class PageResponseDTO<T> {
     private int startPage; // 시작 페이지
     private int endPage; // 마지막 페이지
     private int currentPage; // 현재 페이지

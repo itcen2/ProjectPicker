@@ -27,10 +27,10 @@ public class PostEntity {
     private String postId; //게시판 식별
 
     @Column(nullable = false, name = "post_title") // 널값 허용X
-    private String title; // 게시글 제목
+    private String postTitle; // 게시글 제목
 
     @Column(nullable = false, name = "post_content")
-    private String content; // 게시글 내용
+    private String postContent; // 게시글 내용
 
     @CreationTimestamp // INSERT 시점에 서버시간을 자동으로 입력
     @Column(name = "create_date")
@@ -41,9 +41,6 @@ public class PostEntity {
     private LocalDateTime modifyDate; // 게시글 수정 시간
 
 
-    // 해시태그와 관계형 매핑
-    @OneToMany(mappedBy = "post")
-    private List<HashtagEntity> hashTags = new ArrayList<>(); //해시태그 목록
 
     // 회원 와 관계 설정
     @ManyToOne(fetch = FetchType.LAZY)
@@ -59,5 +56,10 @@ public class PostEntity {
 
     @Column(name = "user_name")
     private String userName;
+
+    // 해시태그와 관계형 매핑
+    @OneToMany(mappedBy = "post")
+    private List<HashTagEntity> hashTags = new ArrayList<>(); //해시태그 목록
+
 
 }

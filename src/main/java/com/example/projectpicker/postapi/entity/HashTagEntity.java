@@ -1,7 +1,6 @@
 package com.example.projectpicker.postapi.entity;
 
 
-import com.example.projectpicker.userapi.entity.UserEntity;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -15,7 +14,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "tbl_hashtag")
-public class HashtagEntity {
+public class HashTagEntity {
 
     @Id
     @GeneratedValue(generator = "system-uuid")

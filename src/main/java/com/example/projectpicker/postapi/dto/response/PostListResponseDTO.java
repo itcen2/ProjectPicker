@@ -12,6 +12,7 @@ import java.util.List;
 public class PostListResponseDTO {
 
     private int count;
+    private PageResponseDTO pageInfo;
     private List<PostResponseDTO> posts; //서비스에서 사용 예정
 
 

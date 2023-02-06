@@ -1,17 +1,74 @@
 package com.example.projectpicker.postapi.controller;
 
 
+import com.example.projectpicker.postapi.dto.request.PageRequestDTO;
+import com.example.projectpicker.postapi.dto.request.PageRequestDTO;
+import com.example.projectpicker.postapi.dto.request.PostCreateRequestDTO;
+import com.example.projectpicker.postapi.dto.response.PostListResponseDTO;
+import com.example.projectpicker.postapi.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.jaxb.SpringDataJaxb;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/")    // 받을 주소
+@RequestMapping("/projectpicker")    // 받을 주소
 public class PostController {
 
+    private final PostService postService;
 
+    // 게시글 목록 조회
+    @GetMapping
+    public ResponseEntity<?> list(PageRequestDTO pageRequestDTO) {
+        log.info("request page info - {}", pageRequestDTO);
+
+        try {
+            PostListResponseDTO listResponseDTO = postService.getList(pageRequestDTO);
+            return ResponseEntity
+                    .ok()
+                    .body(listResponseDTO)
+                    ;
+        } catch (Exception e) {
+            return ResponseEntity
+                    .notFound()
+                    .build()
+                    ;
+        }
+
+    }
+
+    // 프로젝트 모집 게시글 요청
+    @PostMapping
+    public ResponseEntity<?> createPost(
+            @Validated @RequestBody PostCreateRequestDTO requestDTO
+            , BindingResult result  // 검증 에러 정보를 갖고 있는 객체
+    ) {
+        if (requestDTO == null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("게시물 정보가 없습니다.");
+        }
+
+        if (result.hasErrors()) {   // 검증에러가 발생할 시 true 리턴
+            List<FieldError> fieldErrors = result.getFieldErrors();
+            fieldErrors.forEach(err -> {
+                log.warn("invalidated client data - {}", err.toString());
+            });
+            return ResponseEntity
+                    .badRequest()
+                    .body(fieldErrors);
+        }
+
+        return ResponseEntity
+                .ok()
+                .body(requestDTO);
+    }
 }

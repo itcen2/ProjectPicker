@@ -6,6 +6,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter @Getter @ToString
 @NoArgsConstructor
@@ -38,5 +40,19 @@ public class PostEntity {
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-//    private String userId;  // 회원 식별
+//    @JoinColumn(name = "user_name", insertable = false, updatable = false)
+//    @JoinColumn(name = "user_email", insertable = false, updatable = false)
+//    private String user;  // 회원 식별
+    @Column(name = "user_id")
+    private String userId;
+
+    @Column(name = "user_name")
+    private String userName;
+
+    @Column(name = "user_email")
+    private String userEmail;
+
+    @OneToMany(mappedBy = "post")
+    @Builder.Default
+    private List<HashTagEntity> hashTags = new ArrayList<>();
 }

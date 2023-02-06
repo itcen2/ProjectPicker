@@ -2,14 +2,13 @@ package com.example.projectpicker.postapi.controller;
 
 
 import com.example.projectpicker.postapi.dto.request.PageRequestDTO;
-import com.example.projectpicker.postapi.dto.request.PageRequestDTO;
 import com.example.projectpicker.postapi.dto.request.PostCreateRequestDTO;
+import com.example.projectpicker.postapi.dto.request.PostModifyRequestDTO;
 import com.example.projectpicker.postapi.dto.response.PostDetailResponseDTO;
 import com.example.projectpicker.postapi.dto.response.PostListResponseDTO;
 import com.example.projectpicker.postapi.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -22,7 +21,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/projectpicker")    // 받을 주소
-public class PostController {
+public class PostApiController {
 
     private final PostService postService;
 
@@ -98,8 +97,30 @@ public class PostController {
                     .internalServerError()
                     .body(e.getMessage());
         }
+    }
 
+    // 게시물 수정
+    @RequestMapping(
+            value = "/{postId}"
+            , method = {RequestMethod.PUT, RequestMethod.PATCH}
+    )
+    public ResponseEntity<?> modifyPost(
+            @PathVariable("postId") String postId
+            , @RequestBody PostModifyRequestDTO requestDTO
+    ) {
 
+        try {
+            PostDetailResponseDTO responseDTO
+                    = postService.update(postId, requestDTO);
+            return ResponseEntity
+                    .ok()
+                    .body(responseDTO);
+        } catch (RuntimeException e) {
+            log.error("update fail : caused by - {}", e.getMessage());
+            return ResponseEntity
+                    .internalServerError()
+                    .body(e.getMessage());
+        }
 
     }
 }

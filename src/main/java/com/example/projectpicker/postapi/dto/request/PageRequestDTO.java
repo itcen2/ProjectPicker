@@ -29,7 +29,7 @@ public class PageRequestDTO {
 
     public void setSizePerPage(int sizePerPage) {
         if (sizePerPage < 10 || sizePerPage > 100) {
-            this.sizePerPage = 10;
+            this.sizePerPage = 15;
             return;
         }
         this.sizePerPage = sizePerPage;

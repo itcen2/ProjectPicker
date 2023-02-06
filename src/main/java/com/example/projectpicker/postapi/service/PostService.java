@@ -2,6 +2,7 @@ package com.example.projectpicker.postapi.service;
 
 import com.example.projectpicker.postapi.dto.request.PageRequestDTO;
 import com.example.projectpicker.postapi.dto.request.PostCreateRequestDTO;
+import com.example.projectpicker.postapi.dto.request.PostModifyRequestDTO;
 import com.example.projectpicker.postapi.dto.response.PageResponseDTO;
 import com.example.projectpicker.postapi.dto.response.PostDetailResponseDTO;
 import com.example.projectpicker.postapi.dto.response.PostListResponseDTO;
@@ -105,5 +106,24 @@ public class PostService {
 
         // 저장된 객체를 DTO로 변환해서 반환
         return new PostDetailResponseDTO(savedPost);
+    }
+
+    // 수정 중간 처리
+    public PostDetailResponseDTO update(final String postId, final PostModifyRequestDTO modifyDTO)
+            throws RuntimeException {
+        // 수정 전 데이터 조회하기
+        PostEntity entity = postRepository.
+                findById(postId)
+                .orElseThrow(() ->
+                        new RuntimeException("수정 전 데이터가 존재하지 않습니다."));
+        // 수정 진행
+        String modTitle = modifyDTO.getTitle();
+        String modContent = modifyDTO.getContent();
+
+        if (modTitle != null) entity.setPostTitle(modTitle);
+        if (modContent != null) entity.setPostContent(modContent);
+
+        PostEntity modifyPost = postRepository.save(entity);
+        return new PostDetailResponseDTO(modifyPost);
     }
 }

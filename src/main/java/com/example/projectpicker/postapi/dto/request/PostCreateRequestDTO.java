@@ -5,6 +5,7 @@ import com.example.projectpicker.postapi.entity.PostEntity;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Setter @Getter @ToString
@@ -27,6 +28,7 @@ public class PostCreateRequestDTO {
         return PostEntity.builder()
                 .postTitle(this.title)
                 .postContent(this.content)
+                .createDate(LocalDateTime.now())
                 .build();
     }
 

@@ -32,7 +32,7 @@ public class PostEntity {
     @Column(nullable = false, name = "post_content")
     private String postContent; // 내용
 
-    @CreationTimestamp
+
     private LocalDateTime createDate;   // 게시글 생성시간
 
     @UpdateTimestamp

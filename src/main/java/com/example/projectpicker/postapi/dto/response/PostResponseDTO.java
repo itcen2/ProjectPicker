@@ -22,7 +22,7 @@ public class PostResponseDTO {
     private String content;
     private List<String> hashTags;
 
-    @JsonFormat(pattern = "yyyy/MM/dd hh/mm/ss")
+    @JsonFormat(pattern = "yyyy/MM/dd hh:mm:ss")
     private LocalDateTime regDate;
 
     public PostResponseDTO(PostEntity entity){
@@ -30,6 +30,7 @@ public class PostResponseDTO {
         this.authorEmail = entity.getUserEmail();
         this.title = entity.getPostTitle();
         this.content = entity.getPostContent();
+        this.regDate = entity.getCreateDate();
         this.hashTags = entity.getHashTags()
                 .stream()
                 .map(HashTagEntity::getTagName)

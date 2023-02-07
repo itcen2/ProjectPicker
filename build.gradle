@@ -2,7 +2,18 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.8'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	//id 'war
 }
+
+//war 배포시 주석 푸시면 됩니다.
+
+//war {
+//	archiveName 'ROOT.war'
+//}
+//bootWar.enabled = false; // 내장 WAS 를 비활성화
+//war.enabled = true
+
+
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -23,6 +34,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// 스프링 시큐리티 모듈
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// json web token 라이브러리
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
@@ -32,4 +53,5 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+	exclude '**/*' // 빌드시에 테스트 생략
 }

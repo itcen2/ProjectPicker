@@ -6,10 +6,12 @@ import com.example.projectpicker.postapi.dto.request.PostCreateRequestDTO;
 import com.example.projectpicker.postapi.dto.request.PostModifyRequestDTO;
 import com.example.projectpicker.postapi.dto.response.PostDetailResponseDTO;
 import com.example.projectpicker.postapi.dto.response.PostListResponseDTO;
+import com.example.projectpicker.postapi.entity.PostEntity;
 import com.example.projectpicker.postapi.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
@@ -24,6 +26,31 @@ import java.util.List;
 public class PostApiController {
 
     private final PostService postService;
+
+    /**
+     *  게시판 검색
+     *  postman ( http://localhost:8080/projectpicker/search/ 게시판 제목 ) --GET
+     */
+    @GetMapping("/search/{string}")
+    public ResponseEntity<?> searchList(PageRequestDTO pageRequestDTO,@PathVariable String string) {
+        log.info("request page info - {}", pageRequestDTO);
+
+        try {
+            PostListResponseDTO listResponseDTO = postService.searchList(pageRequestDTO,string);
+            return ResponseEntity
+                    .ok()
+                    .body(listResponseDTO)
+                    ;
+        } catch (Exception e) {
+            return ResponseEntity
+                    .notFound()
+                    .build()
+                    ;
+        }
+
+    }
+
+
 
     // 게시글 목록 조회
     @GetMapping

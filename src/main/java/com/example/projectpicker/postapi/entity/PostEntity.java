@@ -57,4 +57,5 @@ public class PostEntity {
 
     @Column
     private boolean allow;
+
 }

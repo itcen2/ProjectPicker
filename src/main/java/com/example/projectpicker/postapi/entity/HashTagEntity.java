@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Setter @Getter @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "tagId")
 @Builder
 
 @Entity
@@ -19,7 +19,7 @@ public class HashTagEntity {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid" )
-    private String tagid; // 태그 식별코드
+    private String tagId; // 태그 식별코드
 
     private String tagName; // 태그 이름
 

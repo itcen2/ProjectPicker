@@ -2,6 +2,7 @@ package com.example.projectpicker.postapi.dto.response;
 
 import com.example.projectpicker.postapi.entity.HashTagEntity;
 import com.example.projectpicker.postapi.entity.PostEntity;
+import com.example.projectpicker.userapi.entity.UserEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
@@ -24,7 +25,6 @@ public class PostResponseDTO {
     private String userEmail; // 작성자 이메일
     private String title; // 게시글 제목
     private String content; // 게시글 내용
-
     private List<String> hashTags; // 게시글 해쉬태그
     @JsonFormat(pattern = "yyyy-MM-dd HH:ss")
     private LocalDateTime createDate; // 게시글 생성 시간
@@ -38,7 +38,7 @@ public class PostResponseDTO {
         this.userEmail = postEntity.getUserEmail(); // 게시글 작성자 이메일
         this.title = postEntity.getPostTitle(); // 게시글 제목
         this.content = postEntity.getPostContent(); // 게시글 내용
-        this.createDate = postEntity.getCreateDate();
+        this.createDate = postEntity.getCreateDate(); // 게시글 생성 시간
 
 
         this.hashTags = postEntity.getHashTags() // 게시글 해쉬태그

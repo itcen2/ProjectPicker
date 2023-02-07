@@ -48,12 +48,12 @@ public class PostEntity {
      */
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id",insertable = false,updatable = false)
+    @JoinColumn(name = "user_id", insertable = false,updatable = false)
     private UserEntity user;
 
     // 회원 외래키
     @Column(name = "user_id")
-    private String user_Id; // 회원 식별
+    private String userId; // 회원 식별
 
     @Column(name = "user_email")
     private String userEmail;

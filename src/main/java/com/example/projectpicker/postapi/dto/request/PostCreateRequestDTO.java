@@ -28,11 +28,17 @@ public class PostCreateRequestDTO {
 
     private List<String> hashTags;
 
+//    private String userName;
+//
+//    private String userEmail;
+
     //DTO 를 엔티티로 ~
     public PostEntity toEntity() {
         return PostEntity.builder()
                 .postTitle(this.title) // 클라이언트가 입력한 title 값을 엔티티
                 .postContent(this.content)
+//                .userName(this.userName)
+//                .userEmail(this.userEmail)
                 .build();
     }
 }

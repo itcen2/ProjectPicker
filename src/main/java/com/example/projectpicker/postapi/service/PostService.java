@@ -44,6 +44,7 @@ public class PostService {
                 "createDate"
         );
 
+//        final Page<PostEntity> pageData = postRepository.findByAllowTrue(pageable);
         final Page<PostEntity> pageData = postRepository.findAll(pageable);
         List<PostEntity> list = pageData.getContent();
 
@@ -94,7 +95,7 @@ public class PostService {
         List<HashTagEntity> hashTagEntities = new ArrayList<>();
         for (String ht : hashTags) {
             HashTagEntity tagEntity = HashTagEntity.builder()
-                    .post(savedPost)
+                    .post(savedPost.getPostId())
                     .tagName(ht)
                     .build();
 

@@ -30,7 +30,6 @@ public class PostResponseDTO {
         this.authorEmail = entity.getUserEmail();
         this.title = entity.getPostTitle();
         this.content = entity.getPostContent();
-
         this.hashTags = entity.getHashTags()
                 .stream()
                 .map(HashTagEntity::getTagName)

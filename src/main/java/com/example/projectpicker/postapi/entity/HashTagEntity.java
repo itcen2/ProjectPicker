@@ -22,7 +22,6 @@ public class HashTagEntity {
 
     private String tagName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id", insertable = false, updatable = false)
-    private PostEntity post;
+    @Column(name = "post_id")
+    private String post;
 }

@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -32,10 +33,9 @@ public class PostEntity {
     private String postContent; // 내용
 
     @CreationTimestamp
-    @Column(name = "create_date")
     private LocalDateTime createDate;   // 게시글 생성시간
 
-    @CreationTimestamp
+    @UpdateTimestamp
     @Column(name = "modify_date")
     private LocalDateTime modifyDate;   // 게시글 수정시간
 
@@ -52,7 +52,8 @@ public class PostEntity {
     private String userEmail;
 
     @OneToMany(mappedBy = "post")
-    private List<HashTagEntity> hashTags;
+    @Builder.Default
+    private List<HashTagEntity> hashTags = new ArrayList<>();
 
     @Column
     private boolean allow;

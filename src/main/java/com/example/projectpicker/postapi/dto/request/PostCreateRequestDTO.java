@@ -20,6 +20,7 @@ public class PostCreateRequestDTO {
     @NotBlank
     private String content;
 
+
     private List<String> hashTags;
 
     public PostEntity toEntity() {

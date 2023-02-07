@@ -45,6 +45,27 @@ public class PostApiController {
 
     }
 
+    // 게시글 검색
+
+    @GetMapping("/search/{string}")
+    public ResponseEntity<?> search(PageRequestDTO pageRequestDTO, @PathVariable String string) {
+        log.info("request page info - {}", pageRequestDTO);
+
+        try {
+            PostListResponseDTO listResponseDTO = postService.searchList(pageRequestDTO, string);
+            return ResponseEntity
+                    .ok()
+                    .body(listResponseDTO)
+                    ;
+        } catch (Exception e) {
+            return ResponseEntity
+                    .notFound()
+                    .build()
+                    ;
+        }
+
+    }
+
     // 게시글 개별 조회
     @GetMapping("/{postId}")
     public ResponseEntity<?> detail(@PathVariable String postId) {

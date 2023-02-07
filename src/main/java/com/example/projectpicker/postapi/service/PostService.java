@@ -66,6 +66,38 @@ public class PostService {
         return listResponseDTO;
     }
 
+    // 특정 검색 리스트 조회 중간처리
+    public PostListResponseDTO searchList(PageRequestDTO pageRequestDTO, String string) {
+
+        Pageable pageable = PageRequest.of(
+                pageRequestDTO.getPage() - 1,
+                pageRequestDTO.getSizePerPage(),
+                Sort.Direction.DESC,
+                "createDate"
+        );
+
+//        final Page<PostEntity> pageData = postRepository.findByAllowTrue(pageable);
+        final Page<PostEntity> pageData = postRepository.findByPostTitleContaining(string, pageable);
+        List<PostEntity> list = pageData.getContent();
+
+        if (list.isEmpty()) {
+            throw new RuntimeException("조회 결과가 없습니다.");
+        }
+
+        // 엔터티 리스트를 DTO리스트로 변환해서 클라이언트에 응답
+        List<PostResponseDTO> responseDTOList = list.stream()
+                .map(PostResponseDTO::new)
+                .collect(toList());
+
+        PostListResponseDTO listResponseDTO = PostListResponseDTO.builder()
+                .count(responseDTOList.size())
+                .pageInfo(new PageResponseDTO<PostEntity>(pageData))
+                .posts(responseDTOList)
+                .build();
+
+        return listResponseDTO;
+    }
+
     // 개별 조회 중간처리
     public PostDetailResponseDTO getDetail(String postId) {
         PostEntity post = postRepository

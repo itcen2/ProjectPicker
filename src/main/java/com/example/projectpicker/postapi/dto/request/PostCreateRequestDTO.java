@@ -21,6 +21,12 @@ public class PostCreateRequestDTO {
     @NotBlank
     private String content;
 
+    @NotBlank
+    private String userName;
+
+    @NotBlank
+    private String userEmail;
+
 //    private boolean allow;
 
     private List<String> hashTags;
@@ -31,6 +37,8 @@ public class PostCreateRequestDTO {
                 .postContent(this.content)
 //                .allow(this.allow)
                 .createDate(LocalDateTime.now())
+                .userName(this.userName)
+                .userEmail(this.userEmail)
                 .build();
     }
 

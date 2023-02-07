@@ -33,7 +33,10 @@ public class PostService {
     private final PostRepository postRepository;
     private final HashTagRepository hashTagRepository;
 
-    // 게시글 목록 조회
+
+    /**
+     * 게시글 목록 조회
+     */
     @Transactional
     public PostListResponseDTO getList(PageRequestDTO pageRequestDTO) {
 
@@ -65,7 +68,11 @@ public class PostService {
         return listResponseDTO;
     }
 
-    // 개별 조회 중간처리
+
+    /**
+     * 개별 조회 중간처리
+      */
+
     public PostDetailResponseDTO getDetail(String postId) {
         PostEntity post = postRepository
                 .findById(postId)
@@ -76,7 +83,10 @@ public class PostService {
         return new PostDetailResponseDTO(post);
     }
 
-    // 게시글 등록 중간처리
+
+    /**
+     * 게시글 등록
+      */
     @Transactional
     public PostDetailResponseDTO insert(final PostCreateRequestDTO createDTO)
             throws RuntimeException {
@@ -108,7 +118,10 @@ public class PostService {
         return new PostDetailResponseDTO(savedPost);
     }
 
-    // 수정 중간 처리
+
+    /**
+     * 수정 중간 처리
+     */
     public PostDetailResponseDTO update(final String postId, final PostModifyRequestDTO modifyDTO)
             throws RuntimeException {
         // 수정 전 데이터 조회하기
@@ -127,7 +140,9 @@ public class PostService {
         return new PostDetailResponseDTO(modifyPost);
     }
 
-    // 삭제 중간처리
+    /**
+     * 삭제 중간처리
+     */
     public void delete(final String  postId)
             throws RuntimeException {
         postRepository.deleteById(postId);

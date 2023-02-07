@@ -65,7 +65,8 @@ public class PostApiController {
 
     }
 
-    // 프로젝트 모집 게시글 요청
+    // 게시글 등록
+    // Postman (localhost:8080/projectpicker) --POST
     @PostMapping
     public ResponseEntity<?> createPost(
             @Validated @RequestBody PostCreateRequestDTO requestDTO

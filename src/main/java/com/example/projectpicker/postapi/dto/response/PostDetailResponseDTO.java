@@ -1,6 +1,7 @@
 package com.example.projectpicker.postapi.dto.response;
 
 import com.example.projectpicker.postapi.entity.PostEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -11,10 +12,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @EqualsAndHashCode()
 public class PostDetailResponseDTO extends PostResponseDTO{
-    private LocalDateTime modDate;
 
-    public PostDetailResponseDTO(PostEntity entity){
-        super(entity);
-        this.modDate = entity.getModifyDate();
+    @JsonFormat(pattern = "yyyy-MM-dd HH:ss")
+    private LocalDateTime modifyDate; // 게시글 수정 시간
+
+    public PostDetailResponseDTO(PostEntity postEntity){
+        super(postEntity);
+        this.modifyDate = postEntity.getModifyDate();
     }
 }

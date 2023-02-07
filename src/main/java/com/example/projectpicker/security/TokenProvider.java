@@ -19,7 +19,7 @@ import java.util.Date;
 public class TokenProvider {
 
     // 토큰 서명에 사용할 불변성을 가진 비밀 키
-    private static final String SECRET_KEY = "A4NSl604sgyHJj1qwEkR3ycUeR4uUAt7WJraD7EN3O9DVM4yyYuHxMEbSF4XXyYJkal13eqgB0F7Bq4H";
+    private static final String SECRET_KEY = "A5NSl604sgyHJj1qwEkR3ycUeR4uUAt7WJraD7EN3O9DVM4yyYuHxMEbSF4XXyYJkal13eqgB0F7Bq4H";
 
     //토큰 발급 메서드 - createToken
     public String createToken(UserEntity userEntity){

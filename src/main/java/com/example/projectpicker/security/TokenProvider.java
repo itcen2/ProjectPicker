@@ -2,7 +2,7 @@ package com.example.projectpicker.security;
 
 //토큰을 발급하고, 서명 위조를 확인해주는 객체
 
-import com.example.projectpicker.userapi.entity.UserEntity;
+import com.example.projectpicker.user.entity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

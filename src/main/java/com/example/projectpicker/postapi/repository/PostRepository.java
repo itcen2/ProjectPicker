@@ -21,9 +21,9 @@ public interface PostRepository  extends JpaRepository<PostEntity, String> {
     Page<PostEntity> findByAllowTrue(Pageable pageable);
 
     @Query
-    List<PostEntity> findByPostTitleContaining(String keyword);
+    Page<PostEntity> findByPostTitleContaining(String keyword, Pageable pageable);
 
     @Query
-    Page<PostEntity> findByPostTitleContaining(String keyword, Pageable pageable);
+    Page<PostEntity> findByAllowTrueAndPostTitleContaining(String keyword, Pageable pageable);
 
 }

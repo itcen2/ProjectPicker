@@ -76,7 +76,7 @@ public class PostService {
                 "createDate"
         );
 
-//        final Page<PostEntity> pageData = postRepository.findByAllowTrue(pageable);
+//        final Page<PostEntity> pageData = postRepository.findByAllowTrueAndPostTitleContaining(string, pageable);
         final Page<PostEntity> pageData = postRepository.findByPostTitleContaining(string, pageable);
         List<PostEntity> list = pageData.getContent();
 

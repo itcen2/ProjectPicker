@@ -21,6 +21,7 @@ public class PostCreateRequestDTO {
     @NotBlank
     private String content;
 
+//    private boolean allow;
 
     private List<String> hashTags;
 
@@ -28,6 +29,7 @@ public class PostCreateRequestDTO {
         return PostEntity.builder()
                 .postTitle(this.title)
                 .postContent(this.content)
+//                .allow(this.allow)
                 .createDate(LocalDateTime.now())
                 .build();
     }

@@ -1,5 +1,6 @@
 package com.example.projectpicker.post.entity;
 
+import com.example.projectpicker.comment.entity.CommentEntity;
 import com.example.projectpicker.user.entity.UserEntity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,6 +24,7 @@ public class PostEntity {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid") // 전략 = "중복되지 않는 id" 설정
+    @Column(name = "post_id")
     private String postId; //게시판 식별
 
     @Column(nullable = false, name = "post_title") // 널값 허용X
@@ -72,4 +74,8 @@ public class PostEntity {
     // 일반 회원이 게시글 등록시, 관리자가 게시글 등록 허용여부에 사용되는 엔티티
     @Column
     private boolean allow;
+
+
+    @OneToMany(mappedBy = "comment", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private List<CommentEntity> comments;
 }

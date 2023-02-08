@@ -96,8 +96,8 @@ public class PostApiController {
     @PostMapping
     public ResponseEntity<?> createPost(
             @Validated @RequestBody PostCreateRequestDTO requestDTO
-            , BindingResult result  // 검증 에러 정보를 갖고 있는 객체\
-            , @AuthenticationPrincipal String userId
+            , BindingResult result  // 검증 에러 정보를 갖고 있는 객체
+            , @AuthenticationPrincipal String userId  // 강사님이 추가하신 코드
     ) {
         if (requestDTO == null) {
             return ResponseEntity
@@ -116,7 +116,7 @@ public class PostApiController {
         }
 
         try {
-            PostDetailResponseDTO responseDTO = postService.insert(requestDTO, userId);
+            PostDetailResponseDTO responseDTO = postService.insert(requestDTO, userId); // 강사님이 userID 추가하셨음.
             return ResponseEntity
                     .ok()
                     .body(responseDTO);

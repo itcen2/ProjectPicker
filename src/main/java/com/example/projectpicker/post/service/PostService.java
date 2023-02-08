@@ -35,7 +35,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final HashTagRepository hashTagRepository;
 
-    private final UserRepository userRepository;
+    private final UserRepository userRepository; // 강사님이 추가하신 코드
 
 
     /**
@@ -130,13 +130,13 @@ public class PostService {
       */
     @Transactional
     public PostDetailResponseDTO insert(final PostCreateRequestDTO createDTO
-    , final String userId)
+    , final String userId) // 강사님이 추가하신 코드 (final String userID)
             throws RuntimeException {
 
         // dto를 entity변환 작업
         final PostEntity entity = createDTO.toEntity();
 
-        UserEntity user = userRepository.findById(userId).get();
+        UserEntity user = userRepository.findById(userId).get(); // 강사님이 추가하신 코드
         log.info("user : {}", user);
         entity.setUser(user);
 

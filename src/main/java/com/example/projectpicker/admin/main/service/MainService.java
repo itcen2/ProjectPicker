@@ -5,7 +5,6 @@ import com.example.projectpicker.post.entity.PostEntity;
 import com.example.projectpicker.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jboss.jandex.Main;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +30,9 @@ public class MainService {
                 .collect(Collectors.toList());
 
     }*/
+
+
+    // 허용된 게시글 리스트
     public List<MainPostDTO> findAllowList(){
         List<PostEntity> all = postRepository.findByAllowTrue();
 
@@ -39,6 +41,8 @@ public class MainService {
                 .collect(Collectors.toList());
 
     }
+
+    // 모든 리스트 (허용여부 상관없이)
     public List<MainPostDTO> findAllList(){
         List<PostEntity> all = postRepository.findAll();
 
@@ -47,6 +51,8 @@ public class MainService {
                 .collect(Collectors.toList());
 
     }
+
+
     public List<MainPostDTO> modifyItem(final String postId, final MainPostDTO mainPostDTO){
         Optional<PostEntity> post = postRepository.findById(postId);
         post.ifPresent(entity -> {

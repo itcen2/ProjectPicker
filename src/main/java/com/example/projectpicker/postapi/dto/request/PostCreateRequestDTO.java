@@ -21,10 +21,10 @@ public class PostCreateRequestDTO {
     @NotBlank
     private String content;
 
-    @NotBlank
+//    @NotBlank
     private String userName;
 
-    @NotBlank
+//    @NotBlank
     private String userEmail;
 
 //    private boolean allow;

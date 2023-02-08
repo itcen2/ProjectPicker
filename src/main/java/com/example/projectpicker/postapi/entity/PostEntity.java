@@ -41,7 +41,7 @@ public class PostEntity {
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-//    private String user;  // 회원 식별
+//    private UserEntity user;  // 회원 식별
     @Column(name = "user_id")
     private String userId;
 

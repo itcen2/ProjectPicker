@@ -127,7 +127,7 @@ public class PostService {
         List<HashTagEntity> hashTagEntities = new ArrayList<>();
         for (String ht : hashTags) {
             HashTagEntity tagEntity = HashTagEntity.builder()
-                    .post(savedPost.getPostId())
+                    .post(savedPost)
                     .tagName(ht)
                     .build();
 

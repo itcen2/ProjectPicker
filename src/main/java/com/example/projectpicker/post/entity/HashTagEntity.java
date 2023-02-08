@@ -27,8 +27,7 @@ public class HashTagEntity {
     // 게시판 와 관계 설정
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-//    @JoinColumn(name = "post_id",insertable = false,updatable = false)
-    private PostEntity post;
+    private PostEntity postEntity;
 
 
 }

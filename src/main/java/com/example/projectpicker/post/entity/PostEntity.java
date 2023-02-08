@@ -76,6 +76,6 @@ public class PostEntity {
     private boolean allow;
 
 
-    @OneToMany(mappedBy = "comment", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "postEntity", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<CommentEntity> comments;
 }

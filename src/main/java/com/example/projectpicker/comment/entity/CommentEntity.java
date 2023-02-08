@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @Builder
 @Table(name = "tbl_comment")
+@Entity
 public class CommentEntity {
 
     @Id

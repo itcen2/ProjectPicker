@@ -102,15 +102,17 @@ public class PostService {
     // 특정 해시태그 검색 리스트 조회 중간처리
     public PostListResponseDTO searchHashTagList(String keyword1, String keyword2, PageRequestDTO pageRequestDTO) {
 
+        List<String> postId = postRepository.HashTagsSearch(keyword1, keyword2);
+
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPage() - 1,
                 pageRequestDTO.getSizePerPage(),
                 Sort.Direction.DESC,
-                "createDate"
+                "create_Date"
         );
 
 //        final Page<PostEntity> pageData = postRepository.findByAllowTrueAndPostTitleContaining(string, pageable);
-        final Page<PostEntity> pageData = postRepository.HashTagsSearch(keyword1, keyword2, pageable);
+        final Page<PostEntity> pageData = postRepository.findPostId(postId, pageable);
         List<PostEntity> list = pageData.getContent();
 
         if (list.isEmpty()) {
@@ -196,6 +198,7 @@ public class PostService {
     // 삭제 중간처리
     public void delete(final String  postId)
             throws RuntimeException {
+        hashTagRepository.deletePostId(postId);
         postRepository.deleteById(postId);
     }
 }

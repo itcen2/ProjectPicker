@@ -1,43 +1,51 @@
-package com.example.projectpicker.comment.entity;
-
-import com.example.projectpicker.postapi.entity.PostEntity;
-import com.example.projectpicker.user.entity.UserEntity;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
-
-@Getter @Setter @ToString
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(of = "commentId")
-@Entity
-@Builder
-@Table(name = "tbl_comment")
-public class CommentEntity {
-
-    @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    private String commentId;
-    private String comment;
-
-    @CreationTimestamp
-    private LocalDateTime createAt;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns(value = {
-            @JoinColumn(name = "usr_id", referencedColumnName = "user_id"),
-            @JoinColumn(name = "usr_name", referencedColumnName = "user_name"),
-            @JoinColumn(name = "usr_email", referencedColumnName = "user_email")
-    })
-    private UserEntity userEntity;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private PostEntity comments;
-
-}
+//package com.example.projectpicker.comment.entity;
+//
+//import com.example.projectpicker.post.entity.PostEntity;
+//import com.example.projectpicker.user.entity.UserEntity;
+//import lombok.*;
+//import org.hibernate.annotations.CreationTimestamp;
+//import org.hibernate.annotations.GenericGenerator;
+//import org.hibernate.annotations.UpdateTimestamp;
+//
+//import javax.persistence.*;
+//import java.time.LocalDateTime;
+//
+//@Getter @Setter @ToString
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@EqualsAndHashCode(of = "commentId")
+//@Entity
+//@Builder
+//@Table(name = "tbl_comment")
+//public class CommentEntity {
+//
+//    @Id
+//    @GeneratedValue(generator = "system-uuid")
+//    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+//    private String commentId; // 댓글 식별코드
+//    private String comment; // 댓글 내용
+//
+//    @CreationTimestamp
+//    private LocalDateTime createAt; // 댓글 생성 시간
+//
+//    @UpdateTimestamp
+//    private LocalDateTime modifyAt; // 댓글 수정 시간
+//
+//
+//    /**
+//     회원 와 관계 설정
+//     */
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id", insertable = false,updatable = false)
+//    private UserEntity userEntity;
+//
+//
+//    /**
+//     게시판 와 관계 설정
+//     */
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "post_id")
+//    private PostEntity postEntity;
+//
+//}
+//

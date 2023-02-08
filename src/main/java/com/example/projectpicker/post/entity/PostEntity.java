@@ -4,6 +4,7 @@ import com.example.projectpicker.user.entity.UserEntity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -32,11 +33,10 @@ public class PostEntity {
     private String postContent; // 게시글 내용
 
     @CreationTimestamp // INSERT 시점에 서버시간을 자동으로 입력
-//    @Column(name = "create_date")
+    @Column(name = "create_date")
     private LocalDateTime createDate; // 게시글 생성시간
 
-//    @UpdateTimestamp // UPDATE 시점에 서버시간을 자동으로 입력
-    @CreationTimestamp
+    @UpdateTimestamp // UPDATE 시점에 서버시간을 자동으로 입력
     @Column(name = "modify_date")
     private LocalDateTime modifyDate; // 게시글 수정 시간
 
@@ -47,18 +47,9 @@ public class PostEntity {
      */
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false,updatable = false)
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    // 회원 외래키
-    @Column(name = "user_id")
-    private String userId; // 회원 식별
-
-    @Column(name = "user_email")
-    private String userEmail;
-
-    @Column(name = "user_name")
-    private String userName;
 
 
     /**

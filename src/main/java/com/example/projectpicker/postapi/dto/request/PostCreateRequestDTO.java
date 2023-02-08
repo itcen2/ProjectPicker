@@ -21,10 +21,10 @@ public class PostCreateRequestDTO {
     @NotBlank
     private String content;
 
-    @NotBlank
+//    @NotBlank
     private String userName;
 
-    @NotBlank
+//    @NotBlank
     private String userEmail;
 
 //    private boolean allow;
@@ -37,8 +37,6 @@ public class PostCreateRequestDTO {
                 .postContent(this.content)
 //                .allow(this.allow)
                 .createDate(LocalDateTime.now())
-                .userName(this.userName)
-                .userEmail(this.userEmail)
                 .build();
     }
 

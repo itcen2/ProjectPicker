@@ -10,6 +10,7 @@ import com.example.projectpicker.postapi.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
@@ -91,6 +92,7 @@ public class PostApiController {
     public ResponseEntity<?> createPost(
             @Validated @RequestBody PostCreateRequestDTO requestDTO
             , BindingResult result  // 검증 에러 정보를 갖고 있는 객체
+            /*, @AuthenticationPrincipal String userId*/
     ) {
         if (requestDTO == null) {
             return ResponseEntity
@@ -109,7 +111,7 @@ public class PostApiController {
         }
 
         try {
-            PostDetailResponseDTO responseDTO = postService.insert(requestDTO);
+            PostDetailResponseDTO responseDTO = postService.insert(requestDTO/*, userId*/);
             return ResponseEntity
                     .ok()
                     .body(responseDTO);

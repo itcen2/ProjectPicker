@@ -111,11 +111,14 @@ public class PostService {
 
     // 게시글 등록 중간처리
     @Transactional
-    public PostDetailResponseDTO insert(final PostCreateRequestDTO createDTO)
+    public PostDetailResponseDTO insert(final PostCreateRequestDTO createDTO/*, final String userId*/)
         throws RuntimeException {
 
         // dto를 entity변환 작업
         final PostEntity entity = createDTO.toEntity();
+
+//        UserEntity user = userRepository.findById(userId).get();
+//        entity.setUser(user);
 
         PostEntity savedPost = postRepository.save(entity);
 

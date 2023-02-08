@@ -26,8 +26,8 @@ public class PostResponseDTO {
     private LocalDateTime regDate;
 
     public PostResponseDTO(PostEntity entity){
-        this.authorName = entity.getUserName();
-        this.authorEmail = entity.getUserEmail();
+        this.authorName = entity/*.getUser*/.getUserName();
+        this.authorEmail = entity/*.getUser*/.getUserEmail();
         this.title = entity.getPostTitle();
         this.content = entity.getPostContent();
         this.regDate = entity.getCreateDate();

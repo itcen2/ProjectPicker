@@ -33,7 +33,7 @@ public class PostEntity {
     private String postContent; // 게시글 내용
 
     @CreationTimestamp // INSERT 시점에 서버시간을 자동으로 입력
-//    @Column(name = "create_date")
+    @Column(name = "create_date")
     private LocalDateTime createDate; // 게시글 생성시간
 
     @UpdateTimestamp // UPDATE 시점에 서버시간을 자동으로 입력
@@ -47,7 +47,7 @@ public class PostEntity {
      */
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false,updatable = false)
+    @JoinColumn(name = "user_id")
     private UserEntity user;
 
 

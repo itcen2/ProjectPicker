@@ -41,8 +41,8 @@ public class UserEntity {
     private List<PostEntity> PostId = new ArrayList<>(); //해시태그 목록
 
 
-    public void addPost(PostEntity entity) {
-        getPostId().add(entity);
-    }
+//    public void addPost(PostEntity entity) {
+//        getPostId().add(entity);
+//    }
 
 }

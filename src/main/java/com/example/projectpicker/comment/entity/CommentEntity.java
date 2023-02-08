@@ -42,6 +42,9 @@ public class CommentEntity {
     @JoinColumn(name = "post_id")
     private PostEntity postEntity;
 
-
+    // 댓글 수정을 위한 setter
+    public void update(String comment) {
+        this.comment = comment;
+    }
 
 }

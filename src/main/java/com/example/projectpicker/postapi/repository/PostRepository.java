@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,8 @@ public interface PostRepository  extends JpaRepository<PostEntity, String> {
 
     Page<PostEntity> findByAllowTrueAndPostTitleContaining(String keyword, Pageable pageable);
 
-    @Query(value = "SELECT tbl_post.* FROM tbl_hashtag JOIN tbl_post ON tbl_post.post_id = tbl_hashtag.post_id WHERE tbl_hashtag.tag_name IN (?1, ?2) GROUP BY post_id HAVING COUNT(tag_id) >= 2;")
-    List<PostEntity> HashTagsSearch(String keyword1, String keyword2, Pageable pageable);
+    @Query(value = "SELECT tbl_post.post_id,post_title FROM tbl_hashtag JOIN tbl_post ON tbl_post.post_id = tbl_hashtag.post_id WHERE tbl_hashtag.tag_name IN (:keyword1, :keyword2) GROUP BY post_id HAVING COUNT(tag_id) >= 2;", nativeQuery = true)
+    Page<PostEntity> HashTagsSearch(@Param("keyword1") String keyword1, @Param("keyword2") String keyword2, Pageable pageable);
 
 
 }

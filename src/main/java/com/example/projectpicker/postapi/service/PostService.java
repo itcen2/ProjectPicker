@@ -25,16 +25,17 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-@Service
 @Slf4j
+@Service
 @RequiredArgsConstructor
+@Transactional
 public class PostService {
 
     private final PostRepository postRepository;
     private final HashTagRepository hashTagRepository;
 
     // 게시글 목록 조회
-    @Transactional
+
     public PostListResponseDTO getList(PageRequestDTO pageRequestDTO) {
 
         Pageable pageable = PageRequest.of(
@@ -78,6 +79,38 @@ public class PostService {
 
 //        final Page<PostEntity> pageData = postRepository.findByAllowTrueAndPostTitleContaining(string, pageable);
         final Page<PostEntity> pageData = postRepository.findByPostTitleContaining(string, pageable);
+        List<PostEntity> list = pageData.getContent();
+
+        if (list.isEmpty()) {
+            throw new RuntimeException("조회 결과가 없습니다.");
+        }
+
+        // 엔터티 리스트를 DTO리스트로 변환해서 클라이언트에 응답
+        List<PostResponseDTO> responseDTOList = list.stream()
+                .map(PostResponseDTO::new)
+                .collect(toList());
+
+        PostListResponseDTO listResponseDTO = PostListResponseDTO.builder()
+                .count(responseDTOList.size())
+                .pageInfo(new PageResponseDTO<PostEntity>(pageData))
+                .posts(responseDTOList)
+                .build();
+
+        return listResponseDTO;
+    }
+
+    // 특정 해시태그 검색 리스트 조회 중간처리
+    public PostListResponseDTO searchHashTagList(String keyword1, String keyword2, PageRequestDTO pageRequestDTO) {
+
+        Pageable pageable = PageRequest.of(
+                pageRequestDTO.getPage() - 1,
+                pageRequestDTO.getSizePerPage(),
+                Sort.Direction.DESC,
+                "createDate"
+        );
+
+//        final Page<PostEntity> pageData = postRepository.findByAllowTrueAndPostTitleContaining(string, pageable);
+        final Page<PostEntity> pageData = postRepository.HashTagsSearch(keyword1, keyword2, pageable);
         List<PostEntity> list = pageData.getContent();
 
         if (list.isEmpty()) {

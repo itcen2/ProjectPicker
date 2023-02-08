@@ -12,12 +12,14 @@ import java.time.LocalDateTime;
 @Builder
 public class MainPostDTO {
 
-    private String postId;
-    private String postTitle;
-    private String postContent;
-    private LocalDateTime create_date;
-    private Boolean allow;
+    private String postId; // 게시글 식별 아이디(코드)
+    private String postTitle; // 게시글 제목
+    private String postContent; // 게시글 내용
+    private LocalDateTime create_date; // 게시글 생성 날짜
+    private Boolean allow; // 게시글 허용여부
 
+
+    // (DTO <-- PostEntity)
     public MainPostDTO(PostEntity postEntity){
         this.postId = postEntity.getPostId();
         this.postTitle = postEntity.getPostTitle();

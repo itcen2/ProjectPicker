@@ -31,7 +31,7 @@ public class CommentEntity {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false,updatable = false)
-    private UserEntity user;
+    private UserEntity userEntity;
 
 
     /**
@@ -39,7 +39,7 @@ public class CommentEntity {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    private PostEntity post;
+    private PostEntity postEntity;
 
 }
 

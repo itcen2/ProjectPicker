@@ -32,7 +32,7 @@ public class TokenProvider {
                 .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes())
                         , SignatureAlgorithm.HS512
                 )
-                .setSubject(userEntity.getId()) // sub: 토큰 식별자
+                .setSubject(userEntity.getUserId()) // sub: 토큰 식별자
                 .setIssuer("project picker") // iss: 발급자 정보
                 .setIssuedAt(new Date()) // iat: 토큰 발급 시간
                 .setExpiration(expiryDate) // exp: 토큰 만료 시간

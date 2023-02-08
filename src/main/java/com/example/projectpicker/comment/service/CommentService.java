@@ -24,7 +24,7 @@ public class CommentService {
                 new IllegalArgumentException("댓글 쓰기 실패 - id : " + postId + " 의 게시물이 존재하지 않습니다." ));
 //        commentRequestDTO.setUserEntity(user);
 //        commentRequestDTO.setPostEntity(post);
-        String userEmail = post.getUserEmail();
+        String userEmail = post.getUserEntity().getUserEmail();
         UserEntity user = userRepository.findByEmail(userEmail);
 
         CommentEntity comment = commentRequestDTO.toEntity(user, post);

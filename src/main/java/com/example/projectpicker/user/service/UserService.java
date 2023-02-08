@@ -48,7 +48,7 @@ public class UserService {
 
         UserEntity savedUser = userRepository.save(userSignUpDTO.toEntity()); // 위 과정을 저장!
 
-        log.info("회원 가입 성공!! - user_id: {} ", savedUser.getId());
+        log.info("회원 가입 성공!! - user_id: {} ", savedUser.getUserId());
         return new UserSignUpResponseDTO(savedUser); // 클라이언트에게 응답결과에는 savedUSer(암호처리된) 정보 반환
     }
 
@@ -75,7 +75,7 @@ public class UserService {
         }
 
         // 비밀번호 검증
-        if(!passwordEncoder.matches(rawPassword,originalUser.getPassword())){
+        if(!passwordEncoder.matches(rawPassword,originalUser.getUserPassword())){
             throw new RuntimeException("비밀번호가 틀렸습니다.");
         }
 

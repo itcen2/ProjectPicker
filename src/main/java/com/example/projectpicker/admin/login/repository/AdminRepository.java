@@ -1,9 +1,9 @@
 package com.example.projectpicker.admin.login.repository;
 
-import com.example.projectpicker.admin.login.entity.AdminPostEntity;
+import com.example.projectpicker.admin.login.entity.AdminEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AdminRepository extends JpaRepository<AdminPostEntity, String> {
+public interface AdminRepository extends JpaRepository<AdminEntity, String> {
 
-    AdminPostEntity findByAdminEmail(String adminEmail);
+    AdminEntity findByAdminEmail(String adminEmail);
 }

@@ -112,7 +112,7 @@ public class PostService {
 
     /**
      * 개별 조회 중간처리
-      */
+     */
 
     public PostDetailResponseDTO getDetail(String postId) {
         PostEntity post = postRepository
@@ -127,10 +127,10 @@ public class PostService {
 
     /**
      * 게시글 등록
-      */
+     */
     @Transactional
     public PostDetailResponseDTO insert(final PostCreateRequestDTO createDTO
-    , final String userId) // 강사님이 추가하신 코드 (final String userID)
+            , final String userId) // 강사님이 추가하신 코드 (final String userID)
             throws RuntimeException {
 
         // dto를 entity변환 작업
@@ -138,7 +138,7 @@ public class PostService {
 
         UserEntity user = userRepository.findById(userId).get(); // 강사님이 추가하신 코드
         log.info("user : {}", user); // 강사님이 추가하신 코드 (log 확인)
-        entity.setUser(user); // 강사님이 추가하신 코드
+        entity.setUserEntity(user); // 강사님이 추가하신 코드
 
         PostEntity savedPost = postRepository.save(entity);
 
@@ -150,7 +150,7 @@ public class PostService {
         List<HashTagEntity> hashTagEntities = new ArrayList<>();
         for (String ht : hashTags) {
             HashTagEntity tagEntity = HashTagEntity.builder()
-                    .post(savedPost)
+                    .postEntity(savedPost)
                     .tagName(ht)
                     .build();
 

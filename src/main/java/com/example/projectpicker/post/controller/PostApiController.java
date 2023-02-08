@@ -26,6 +26,29 @@ public class PostApiController {
 
     private final PostService postService;
 
+
+
+
+    // 게시글 목록 조회
+    @GetMapping
+    public ResponseEntity<?> list(PageRequestDTO pageRequestDTO) {
+        log.info("request page info - {}", pageRequestDTO);
+
+        try {
+            PostListResponseDTO listResponseDTO = postService.getList(pageRequestDTO);
+            return ResponseEntity
+                    .ok()
+                    .body(listResponseDTO)
+                    ;
+        } catch (Exception e) {
+            return ResponseEntity
+                    .notFound()
+                    .build()
+                    ;
+        }
+
+    }
+
     /**
      *  게시판 검색
      *  postman ( http://localhost:8080/projectpicker/search/ 게시판 제목 ) --GET
@@ -51,25 +74,6 @@ public class PostApiController {
 
 
 
-    // 게시글 목록 조회
-    @GetMapping
-    public ResponseEntity<?> list(PageRequestDTO pageRequestDTO) {
-        log.info("request page info - {}", pageRequestDTO);
-
-        try {
-            PostListResponseDTO listResponseDTO = postService.getList(pageRequestDTO);
-            return ResponseEntity
-                    .ok()
-                    .body(listResponseDTO)
-                    ;
-        } catch (Exception e) {
-            return ResponseEntity
-                    .notFound()
-                    .build()
-                    ;
-        }
-
-    }
 
     // 게시글 개별 조회
     @GetMapping("/{postId}")

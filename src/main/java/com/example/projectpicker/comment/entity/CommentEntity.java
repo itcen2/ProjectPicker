@@ -3,7 +3,9 @@ package com.example.projectpicker.comment.entity;
 import com.example.projectpicker.post.entity.PostEntity;
 import com.example.projectpicker.user.entity.UserEntity;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -23,7 +25,11 @@ public class CommentEntity {
     private String commentId; // 댓글 식별코드
     private String comment; // 댓글 내용
 
+    @CreationTimestamp
     private LocalDateTime createAt; // 댓글 생성 시간
+
+    @UpdateTimestamp
+    private LocalDateTime modifyAt; // 댓글 수정 시간
 
 
     /**

@@ -31,8 +31,8 @@ public class UserSignUpDTO {
     // 엔티티로 변경하는 메서드
     public UserEntity toEntity(){
         return UserEntity.builder()
-                .email(this.email) //클라이언트로 부터 받은 email 정보를 UserEntity값 변경
-                .password(this.password)
+                .userEmail(this.email) //클라이언트로 부터 받은 email 정보를 UserEntity값 변경
+                .userPassword(this.password)
                 .userName(this.userName)
                 .build();
     }

@@ -1,5 +1,6 @@
 package com.example.projectpicker.post.entity;
 
+import com.example.projectpicker.comment.entity.CommentEntity;
 import com.example.projectpicker.user.entity.UserEntity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -40,27 +41,29 @@ public class PostEntity {
     @Column(name = "modify_date")
     private LocalDateTime modifyDate; // 게시글 수정 시간
 
+    private boolean allow; // 일반 회원이 게시글 등록시, 관리자가 게시글 등록 허용여부에 사용되는 엔티티
 
     /**
      회원 와 관계 설정
-     *
      */
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private UserEntity userEntity;
 
 
 
     /**
-     * 해시태그와 관계형 매핑
-      */
+      해시태그와 관계형 매핑
+     */
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "postEntity")
     private List<HashTagEntity> hashTags = new ArrayList<>(); //해시태그 목록
 
+    /**
+     * 댓글(comment)와 관계형 매핑
+     */
+    @OneToMany(mappedBy = "postEntity")
+    private List<CommentEntity> commentEntities = new ArrayList<>();
 
-    // 일반 회원이 게시글 등록시, 관리자가 게시글 등록 허용여부에 사용되는 엔티티
-    @Column
-    private boolean allow;
 }

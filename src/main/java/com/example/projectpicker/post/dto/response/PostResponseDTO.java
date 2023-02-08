@@ -33,8 +33,8 @@ public class PostResponseDTO {
 
     public PostResponseDTO(PostEntity postEntity) {
         this.PostId = postEntity.getPostId(); // 게시글 식별 코드
-        this.userName = postEntity.getUser().getUserName(); // 게시글 작성자 이름 - 강사님이 추가하신 코드
-        this.userEmail = postEntity.getUser().getEmail(); // 게시글 작성자 이메일 -  강사님이 추가하신 코드
+        this.userName = postEntity.getUserEntity().getUserName(); // 게시글 작성자 이름 - 강사님이 추가하신 코드
+        this.userEmail = postEntity.getUserEntity().getUserEmail(); // 게시글 작성자 이메일 -  강사님이 추가하신 코드
         this.title = postEntity.getPostTitle(); // 게시글 제목
         this.content = postEntity.getPostContent(); // 게시글 내용
         this.createDate = postEntity.getCreateDate(); // 게시글 생성 시간

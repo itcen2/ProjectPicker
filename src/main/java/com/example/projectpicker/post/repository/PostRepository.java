@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 
@@ -18,8 +20,13 @@ import org.springframework.stereotype.Repository;
 public interface PostRepository extends JpaRepository<PostEntity, String> {
 
 
-    //findByTitleContaining: title 컬럼을 기준으로 해당 키워드가 포함된것을 찾겠다.
+    List<PostEntity> findByAllowTrue(Pageable pageable);
+
     Page<PostEntity> findByPostTitleContaining(String keyword, Pageable pageable);
+
+
+    //findByTitleContaining: title 컬럼을 기준으로 해당 키워드가 포함된것을 찾겠다.
+    Page<PostEntity> findByAllowTrueAndPostTitleContaining(String keyword, Pageable pageable);
 
 }
 

@@ -28,7 +28,7 @@ public class CommentResponseDTO {
        this.createAt = commentEntity.getCreateAt();
        this.modifyAt = commentEntity.getModifyAt();
        this.userName = commentEntity.getUserEntity().getUserName();
-       this.userEmail = commentEntity.getUserEntity().getEmail();
+       this.userEmail = commentEntity.getUserEntity().getUserEmail();
        this.postId = commentEntity.getPostEntity().getPostId();
    }
 }

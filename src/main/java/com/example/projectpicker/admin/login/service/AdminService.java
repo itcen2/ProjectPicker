@@ -39,8 +39,8 @@ public class AdminService {
                 findEmail.setMessage("비밀번호가 일치하지 않습니다.");
             }
         UserEntity user = UserEntity.builder()
-                .id(findEmail.getAdminId())
-                .email(findEmail.getAdminEmail())
+                .userId(findEmail.getAdminId())
+                .userEmail(findEmail.getAdminEmail())
                 .userName("관리자")
                 .build();
         String token = tokenProvider.createToken(user);

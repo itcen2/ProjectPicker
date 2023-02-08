@@ -1,8 +1,8 @@
 package com.example.projectpicker.admin.main.service;
 
 import com.example.projectpicker.admin.main.dto.MainPostDTO;
-import com.example.projectpicker.postapi.entity.PostEntity;
-import com.example.projectpicker.postapi.repository.PostRepository;
+import com.example.projectpicker.post.entity.PostEntity;
+import com.example.projectpicker.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jboss.jandex.Main;

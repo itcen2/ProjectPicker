@@ -34,10 +34,16 @@ public class CommentEntity {
     @UpdateTimestamp
     private LocalDateTime modifyAt;  // 댓글 수정 시간
 
+    /**
+     * 회원 와 관계 설정
+     */
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
+    /**
+     * 게시판 와 관계 설정
+     */
     @ManyToOne
     @JoinColumn(name = "post_id")
     private PostEntity postEntity;

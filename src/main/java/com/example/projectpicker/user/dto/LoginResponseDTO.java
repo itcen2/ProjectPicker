@@ -26,7 +26,7 @@ public class LoginResponseDTO {
 
     // 엔티티를 DTO로 변경
     public LoginResponseDTO(UserEntity userEntity, String token){
-        this.email = userEntity.getEmail(); // 이메일  -- DB 이메일 정보를 가져와서 클라이언트에게 응답 전달하는 dto에 넣어준다.
+        this.email = userEntity.getUserEmail(); // 이메일  -- DB 이메일 정보를 가져와서 클라이언트에게 응답 전달하는 dto에 넣어준다.
         this.userName = userEntity.getUserName(); // 회원 이름
         this.joinDate = LocalDate.from(userEntity.getJoinDate()); // 가입 날짜
         this.token = token; // 토큰

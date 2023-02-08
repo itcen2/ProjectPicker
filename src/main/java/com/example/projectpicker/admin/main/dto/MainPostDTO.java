@@ -1,6 +1,6 @@
 package com.example.projectpicker.admin.main.dto;
 
-import com.example.projectpicker.postapi.entity.PostEntity;
+import com.example.projectpicker.post.entity.PostEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;

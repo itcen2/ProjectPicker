@@ -137,8 +137,8 @@ public class PostService {
         final PostEntity entity = createDTO.toEntity();
 
         UserEntity user = userRepository.findById(userId).get(); // 강사님이 추가하신 코드
-        log.info("user : {}", user);
-        entity.setUser(user);
+        log.info("user : {}", user); // 강사님이 추가하신 코드 (log 확인)
+        entity.setUser(user); // 강사님이 추가하신 코드
 
         PostEntity savedPost = postRepository.save(entity);
 

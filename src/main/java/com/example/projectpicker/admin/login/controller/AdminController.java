@@ -3,7 +3,7 @@ package com.example.projectpicker.admin.login.controller;
 import com.example.projectpicker.admin.login.dto.AdminPostDTO;
 import com.example.projectpicker.admin.login.dto.AdminResponseLoginDTO;
 import com.example.projectpicker.admin.login.dto.AdminSignUpDTO;
-import com.example.projectpicker.admin.login.entity.AdminPostEntity;
+import com.example.projectpicker.admin.login.entity.AdminEntity;
 import com.example.projectpicker.admin.login.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class AdminController {
 
     // admin 로그인
     @PostMapping
-    public ResponseEntity<?> AdminLogin(@Validated @RequestBody AdminPostEntity adminPostEntity,
+    public ResponseEntity<?> AdminLogin(@Validated @RequestBody AdminEntity adminPostEntity,
                                         BindingResult result
     ){
         AdminPostDTO adminPostDTO = new AdminPostDTO(adminPostEntity);

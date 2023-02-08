@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 public class PostModifyRequestDTO {
 
     @NotBlank
-    @Size(min = 2, max = 10)
+//    @Size(min = 2, max = 10)
     private String title; // 게시판 제목
 
     @NotBlank

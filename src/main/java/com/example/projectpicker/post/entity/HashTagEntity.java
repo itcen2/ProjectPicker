@@ -26,13 +26,9 @@ public class HashTagEntity {
 
     // 게시판 와 관계 설정
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id",insertable = false,updatable = false)
+    @JoinColumn(name = "post_id")
+//    @JoinColumn(name = "post_id",insertable = false,updatable = false)
     private PostEntity post;
-
-    // 해시태그 추가,수정시 사용할 외래키(post_id)
-    @Column(name = "post_id")
-    private String postId;
-
 
 
 }

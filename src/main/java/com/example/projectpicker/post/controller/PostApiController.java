@@ -1,12 +1,12 @@
-package com.example.projectpicker.postapi.controller;
+package com.example.projectpicker.post.controller;
 
 
-import com.example.projectpicker.postapi.dto.request.PostCreateRequestDTO;
-import com.example.projectpicker.postapi.dto.request.PostModifyRequestDTO;
-import com.example.projectpicker.postapi.dto.request.PageRequestDTO;
-import com.example.projectpicker.postapi.dto.response.PostDetailResponseDTO;
-import com.example.projectpicker.postapi.dto.response.PostListResponseDTO;
-import com.example.projectpicker.postapi.service.PostService;
+import com.example.projectpicker.post.dto.request.PageRequestDTO;
+import com.example.projectpicker.post.dto.request.PostCreateRequestDTO;
+import com.example.projectpicker.post.dto.request.PostModifyRequestDTO;
+import com.example.projectpicker.post.dto.response.PostDetailResponseDTO;
+import com.example.projectpicker.post.dto.response.PostListResponseDTO;
+import com.example.projectpicker.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,18 +21,21 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/projectPicker")    // 받을 주소
+@RequestMapping("/projectpicker")    // 받을 주소
 public class PostApiController {
 
     private final PostService postService;
 
-    // 게시글 목록 조회
-    @GetMapping
-    public ResponseEntity<?> list(PageRequestDTO pageRequestDTO) {
+    /**
+     *  게시판 검색
+     *  postman ( http://localhost:8080/projectpicker/search/ 게시판 제목 ) --GET
+     */
+    @GetMapping("/search/{string}")
+    public ResponseEntity<?> searchList(PageRequestDTO pageRequestDTO,@PathVariable String string) {
         log.info("request page info - {}", pageRequestDTO);
 
         try {
-            PostListResponseDTO listResponseDTO = postService.getList(pageRequestDTO);
+            PostListResponseDTO listResponseDTO = postService.searchList(pageRequestDTO,string);
             return ResponseEntity
                     .ok()
                     .body(listResponseDTO)
@@ -46,14 +49,15 @@ public class PostApiController {
 
     }
 
-    // 게시글 검색
 
-    @GetMapping("/search/{string}")
-    public ResponseEntity<?> search(PageRequestDTO pageRequestDTO, @PathVariable String string) {
+
+    // 게시글 목록 조회
+    @GetMapping
+    public ResponseEntity<?> list(PageRequestDTO pageRequestDTO) {
         log.info("request page info - {}", pageRequestDTO);
 
         try {
-            PostListResponseDTO listResponseDTO = postService.searchList(pageRequestDTO, string);
+            PostListResponseDTO listResponseDTO = postService.getList(pageRequestDTO);
             return ResponseEntity
                     .ok()
                     .body(listResponseDTO)
@@ -87,12 +91,13 @@ public class PostApiController {
 
     }
 
-    // 프로젝트 모집 게시글 요청
+    // 게시글 등록
+    // Postman (localhost:8080/projectpicker) --POST
     @PostMapping
     public ResponseEntity<?> createPost(
             @Validated @RequestBody PostCreateRequestDTO requestDTO
             , BindingResult result  // 검증 에러 정보를 갖고 있는 객체
-            /*, @AuthenticationPrincipal String userId*/
+            , @AuthenticationPrincipal String userId  // 강사님이 추가하신 코드
     ) {
         if (requestDTO == null) {
             return ResponseEntity
@@ -111,11 +116,12 @@ public class PostApiController {
         }
 
         try {
-            PostDetailResponseDTO responseDTO = postService.insert(requestDTO/*, userId*/);
+            PostDetailResponseDTO responseDTO = postService.insert(requestDTO, userId); // 강사님이 userID 추가하셨음.
             return ResponseEntity
                     .ok()
                     .body(responseDTO);
         } catch (RuntimeException e) {
+            e.printStackTrace();
             return ResponseEntity
                     .internalServerError()
                     .body(e.getMessage());

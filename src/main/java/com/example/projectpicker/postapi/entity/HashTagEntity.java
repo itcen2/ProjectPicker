@@ -22,7 +22,10 @@ public class HashTagEntity {
 
     private String tagName;
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = PostEntity.class)
-    @JoinColumn(name = "postId")
-    private String post;
+//    @Column(name = "post_id")
+//    private String post;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id", insertable = true, updatable = false)
+    private PostEntity hashtag;
 }

@@ -1,7 +1,7 @@
 package com.example.projectpicker.postapi.entity;
 
+import com.example.projectpicker.comment.entity.CommentEntity;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -11,12 +11,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter @Getter @ToString
+@Getter@Setter@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "postId")
 @Builder
-
 @Entity
 @Table(name = "tbl_post")
 public class PostEntity {
@@ -32,12 +31,14 @@ public class PostEntity {
     @Column(nullable = false, name = "post_content")
     private String postContent; // 내용
 
-
+    @CreationTimestamp
     private LocalDateTime createDate;   // 게시글 생성시간
 
     @UpdateTimestamp
     @Column(name = "modify_date")
     private LocalDateTime modifyDate;   // 게시글 수정시간
+
+    private boolean allow;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "user_id", insertable = false, updatable = false)
@@ -51,11 +52,11 @@ public class PostEntity {
     @Column(name = "user_email")
     private String userEmail;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "hashtag")
     @Builder.Default
     private List<HashTagEntity> hashTags = new ArrayList<>();
 
-    @Column
-    private boolean allow;
-
+    @OneToMany(mappedBy = "comment")
+    @Builder.Default
+    private List<CommentEntity> comments = new ArrayList<>();
 }

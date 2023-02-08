@@ -1,7 +1,5 @@
 package com.example.projectpicker.postapi.dto.response;
 
-import com.example.projectpicker.postapi.dto.request.PageRequestDTO;
-import com.example.projectpicker.postapi.entity.PostEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

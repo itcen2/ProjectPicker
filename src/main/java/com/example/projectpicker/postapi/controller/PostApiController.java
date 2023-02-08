@@ -10,12 +10,21 @@ import com.example.projectpicker.postapi.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+// 리소스 : 게시물 (Post)
+/*
+     게시물 목록 조회:  /posts       - GET
+     게시물 개별 조회:  /posts/{id}  - GET
+     게시물 등록:      /posts       - POST
+     게시물 수정:      /posts/{id}  - PATCH
+     게시물 삭제:      /posts/{id}  - DELETE
+ */
 
 @RestController
 @Slf4j
@@ -23,6 +32,8 @@ import java.util.List;
 @RequestMapping("/projectpicker")    // 받을 주소
 public class PostApiController {
 
+
+    // PostService 에게 의존하는 관계
     private final PostService postService;
 
     // 게시글 목록 조회
@@ -48,7 +59,7 @@ public class PostApiController {
     // 게시글 개별 조회
     @GetMapping("/{postId}")
     public ResponseEntity<?> detail(@PathVariable String postId) {
-        log.info("/projectpicker/{} GET request", postId);
+        log.info("/posts/{} GET request", postId);
 
         try {
             PostDetailResponseDTO dto = postService.getDetail(postId);
@@ -65,11 +76,12 @@ public class PostApiController {
 
     }
 
-    // 프로젝트 모집 게시글 요청
+    // 프로젝트 모집 게시글 등록
     @PostMapping
     public ResponseEntity<?> createPost(
             @Validated @RequestBody PostCreateRequestDTO requestDTO
             , BindingResult result  // 검증 에러 정보를 갖고 있는 객체
+            , @AuthenticationPrincipal String userId // 강사님이 추가한 코드
     ) {
         if (requestDTO == null) {
             return ResponseEntity
@@ -88,7 +100,7 @@ public class PostApiController {
         }
 
         try {
-            PostDetailResponseDTO responseDTO = postService.insert(requestDTO);
+            PostDetailResponseDTO responseDTO = postService.insert(requestDTO,userId); // 강사님이 userID 추가함
             return ResponseEntity
                     .ok()
                     .body(responseDTO);

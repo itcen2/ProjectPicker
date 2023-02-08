@@ -26,8 +26,9 @@ public class PostCreateRequestDTO {
     @NotBlank
     private String content; // 게시판 내용
 
-    private List<String> hashTags;
+    private List<String> hashTags; // 해시태그
 
+    // DTO 를 엔티티로
     public PostEntity toEntity() {
         return PostEntity.builder()
                 .postTitle(this.title)

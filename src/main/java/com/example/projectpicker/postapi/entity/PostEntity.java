@@ -41,10 +41,9 @@ public class PostEntity {
     private LocalDateTime modifyDate; // 게시글 수정 시간
 
 
-
-    // 회원 와 관계 설정
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id",insertable = false,updatable = false)
+    // 회원 와 관계 설정 ( 다 대 일 관계 / [게시판] ---- [회원] )
+    @ManyToOne(fetch = FetchType.LAZY)      // ManyToOne 관계에서 fetchtype 의 기본값은 EAGER 이므로 LAZY 로 설정
+    @JoinColumn(name = "user_id",insertable = false,updatable = false) // join 할 테이블의 기본키 이름을 적으면 된다.
     private UserEntity user;
 
     // 회원 외래키
@@ -61,5 +60,8 @@ public class PostEntity {
     @OneToMany(mappedBy = "post")
     private List<HashTagEntity> hashTags = new ArrayList<>(); //해시태그 목록
 
+    // 일반 회원이 게시글 등록시, 관리자가 게시글 등록 허용여부에 사용되는 엔티티
+    @Column
+    private boolean allow;
 
 }

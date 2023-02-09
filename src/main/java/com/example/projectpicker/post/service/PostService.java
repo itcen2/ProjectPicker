@@ -112,7 +112,7 @@ public class PostService {
 
 
     /**
-     * 특정 검색 리스트 조회 (추가한거)
+     * 특정 검색 리스트 조회 (제목 검색)
      */
     public PostListResponseDTO searchList(PageRequestDTO pageRequestDTO, String string) {
 
@@ -146,9 +146,9 @@ public class PostService {
     }
 
     /**
-     * 특정 해시태그 검색 리스트 조회 중간처리 (추가한거)
+     * 특정 해시태그 검색 리스트 조회 중간처리 (해시태그 1개일때 , 해시태그 2개일때)
      */
-    public PostListResponseDTO searchHashTagList(String keyword1, String keyword2, PageRequestDTO pageRequestDTO) {
+    public PostListResponseDTO searchHashTagList2(String keyword1, String keyword2, PageRequestDTO pageRequestDTO) {
 
         List<String> postId = postRepository.HashTagsSearch(keyword1, keyword2);
 
@@ -159,7 +159,40 @@ public class PostService {
                 "create_Date"
         );
 
-        //final Page<PostEntity> pageData = postRepository.findByAllowTrueAndPostTitleContaining(string, pageable);
+//        final Page<PostEntity> pageData = postRepository.findByAllowTrueAndPostTitleContaining(string, pageable);
+        final Page<PostEntity> pageData = postRepository.findPostId(postId, pageable);
+        List<PostEntity> list = pageData.getContent();
+
+        if (list.isEmpty()) {
+            throw new RuntimeException("조회 결과가 없습니다.");
+        }
+
+        // 엔터티 리스트를 DTO리스트로 변환해서 클라이언트에 응답
+        List<PostResponseDTO> responseDTOList = list.stream()
+                .map(PostResponseDTO::new)
+                .collect(toList());
+
+        PostListResponseDTO listResponseDTO = PostListResponseDTO.builder()
+                .count(responseDTOList.size())
+                .pageInfo(new PageResponseDTO<PostEntity>(pageData))
+                .posts(responseDTOList)
+                .build();
+
+        return listResponseDTO;
+    }
+
+    public PostListResponseDTO searchHashTagList1(String keyword1, PageRequestDTO pageRequestDTO) {
+
+        List<String> postId = postRepository.HashTagsSearch(keyword1);
+
+        Pageable pageable = PageRequest.of(
+                pageRequestDTO.getPage() - 1,
+                pageRequestDTO.getSizePerPage(),
+                Sort.Direction.DESC,
+                "create_Date"
+        );
+
+//        final Page<PostEntity> pageData = postRepository.findByAllowTrueAndPostTitleContaining(string, pageable);
         final Page<PostEntity> pageData = postRepository.findPostId(postId, pageable);
         List<PostEntity> list = pageData.getContent();
 
@@ -261,11 +294,11 @@ public class PostService {
     }
 
     /**
-     * 삭제 중간처리
+     * 삭제 중간처리 ( 해시태그 삭제 후 -> 게시글 삭제 되어야함. 순서중요!)
      */
     public void delete(final String  postId)
             throws RuntimeException {
-        hashTagRepository.deletePostId(postId);
-        postRepository.deleteById(postId);
+        hashTagRepository.deletePostId(postId); // 해시태그 삭제
+        postRepository.deleteById(postId); // 게시글 삭제
     }
 }

@@ -99,13 +99,13 @@ public class PostApiController {
 
     }
 
-    @GetMapping("/hashsearch/{keyword1}")
+    @GetMapping("/hashsearch/{keyword3}")
     public ResponseEntity<?> hashTagSearch1(PageRequestDTO pageRequestDTO,
-                                            @PathVariable String keyword1) {
+                                            @PathVariable String keyword3) {
         log.info("request page info - {}", pageRequestDTO);
 
         try {
-            PostListResponseDTO listResponseDTO = postService.searchHashTagList1(keyword1, pageRequestDTO);
+            PostListResponseDTO listResponseDTO = postService.searchHashTagList1(keyword3, pageRequestDTO);
             return ResponseEntity
                     .ok()
                     .body(listResponseDTO)

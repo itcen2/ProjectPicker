@@ -25,6 +25,8 @@ public interface PostRepository extends JpaRepository<PostEntity, String> {
 //    List<PostEntity> findByAllowTrue(Pageable pageable);
     Page<PostEntity> findByAllowTrue(Pageable pageable);
 
+    List<PostEntity> findByAllowTrue();
+
     @Query(nativeQuery = true, value = "SELECT * FROM tbl_post  WHERE tbl_Post.post_id IN(:ids)")
     Page<PostEntity> findPostId(@Param("ids") List<String> ids, Pageable pageable);
 

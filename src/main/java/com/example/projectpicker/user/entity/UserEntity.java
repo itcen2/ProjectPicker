@@ -1,7 +1,9 @@
 package com.example.projectpicker.user.entity;
 
 
+import com.example.projectpicker.comment.entity.CommentEntity;
 import com.example.projectpicker.post.entity.PostEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -43,6 +45,9 @@ public class UserEntity {
      */
     @OneToMany(mappedBy = "userEntity")
     private List<PostEntity> PostId = new ArrayList<>(); //해시태그 목록
+
+    @OneToMany(mappedBy = "userEntity", targetEntity = CommentEntity.class)
+    private List<CommentEntity> CommentId = new ArrayList<>();
 
 
 }

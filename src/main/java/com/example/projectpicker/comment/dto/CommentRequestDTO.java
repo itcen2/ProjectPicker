@@ -14,21 +14,11 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @Builder
 public class CommentRequestDTO {
-        private String commentId;
         private String comment;
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-        private LocalDateTime createAt;
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-        private LocalDateTime modifyAt;
-        private UserEntity userEntity;
-        private PostEntity postEntity;
 
-        public CommentEntity toEntity() {
+        public CommentEntity toEntity(UserEntity userEntity, PostEntity postEntity) {
             return  CommentEntity.builder()
-                    .commentId(commentId)
                     .comment(comment)
-                    .createAt(createAt)
-                    .modifyAt(modifyAt)
                     .userEntity(userEntity)
                     .postEntity(postEntity)
                     .build();

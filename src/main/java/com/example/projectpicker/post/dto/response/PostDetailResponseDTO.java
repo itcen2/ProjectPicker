@@ -23,10 +23,4 @@ public class PostDetailResponseDTO extends PostResponseDTO {
         super(postEntity);
         this.modifyDate = postEntity.getModifyDate();
     }
-
-    public PostDetailResponseDTO(PostEntity postEntity, CommentEntity commentEntity){
-        super(postEntity);
-        this.comment = commentEntity.getComment();
-        this.modifyDate = postEntity.getModifyDate();
-    }
 }

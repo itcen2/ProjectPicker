@@ -74,16 +74,38 @@ public class PostApiController {
 
 
     /**
-     * 게시글 해시태그 검색(수정 필요)
+     * 게시글 해시태그 검색 (해시태그는 1~2개까지만)
      */
-    @GetMapping("/search/{keyword1}/{keyword2}")
-    public ResponseEntity<?> hashTagSearch(PageRequestDTO pageRequestDTO,
-                                           @PathVariable String keyword1,
-                                           @PathVariable String keyword2) {
+
+
+    @GetMapping("/hashsearch/{keyword1}/{keyword2}")
+    public ResponseEntity<?> hashTagSearch2(PageRequestDTO pageRequestDTO,
+                                            @PathVariable String keyword1,
+                                            @PathVariable String keyword2) {
         log.info("request page info - {}", pageRequestDTO);
 
         try {
-            PostListResponseDTO listResponseDTO = postService.searchHashTagList(keyword1, keyword2, pageRequestDTO);
+            PostListResponseDTO listResponseDTO = postService.searchHashTagList2(keyword1, keyword2, pageRequestDTO);
+            return ResponseEntity
+                    .ok()
+                    .body(listResponseDTO)
+                    ;
+        } catch (Exception e) {
+            return ResponseEntity
+                    .notFound()
+                    .build()
+                    ;
+        }
+
+    }
+
+    @GetMapping("/hashsearch/{keyword1}")
+    public ResponseEntity<?> hashTagSearch1(PageRequestDTO pageRequestDTO,
+                                            @PathVariable String keyword1) {
+        log.info("request page info - {}", pageRequestDTO);
+
+        try {
+            PostListResponseDTO listResponseDTO = postService.searchHashTagList1(keyword1, pageRequestDTO);
             return ResponseEntity
                     .ok()
                     .body(listResponseDTO)

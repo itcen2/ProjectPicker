@@ -36,7 +36,7 @@ public class UserService {
         final String email = userSignUpDTO.getEmail(); // 클라이언트가 보낸 데이터(이메일)
 
         // 이미 존재하는 이메일인 경우
-        if(userRepository.existsByEmail(email)){
+        if(userRepository.existsByUserEmail(email)){
             log.warn("이미 존재하는 이메일 입니다. - {}",email);
             throw new DuplicatedEmailException("이미 존재하는 이메일입니다.");
         }
@@ -58,7 +58,7 @@ public class UserService {
         if (email == null){
             throw new RuntimeException("이메일 값이 없습니다.");
         }
-        return userRepository.existsByEmail(email);
+        return userRepository.existsByUserEmail(email);
     }
 
 
@@ -66,7 +66,7 @@ public class UserService {
     public LoginResponseDTO getByCredentials(final String email, final String rawPassword){
 
         // 입력한 이메일을 통해 회원정보 조회
-        UserEntity originalUser = userRepository.findByEmail(email); // 이메일로 조회된 회원을 originUser 에 담음.
+        UserEntity originalUser = userRepository.findByUserEmail(email); // 이메일로 조회된 회원을 originUser 에 담음.
 
 
         // email 조회된 회원이 null 일때(없을 때)

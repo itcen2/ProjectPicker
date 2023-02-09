@@ -25,7 +25,7 @@ public class CommentService {
 //        commentRequestDTO.setUserEntity(user);
 //        commentRequestDTO.setPostEntity(post);
         String userEmail = post.getUserEntity().getUserEmail();
-        UserEntity user = userRepository.findByEmail(userEmail);
+        UserEntity user = userRepository.findByUserEmail(userEmail);
 
         CommentEntity comment = commentRequestDTO.toEntity(user, post);
         commentRepository.save(comment);

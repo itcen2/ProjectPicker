@@ -14,9 +14,9 @@ public interface UserRepository extends JpaRepository <UserEntity,String>{
 
     // 이메일로 회원을 조회
     // 아래 코드는 sql문으로 다음과 값다. (select * from tbl_user where email = ? )
-    UserEntity findByEmail(String email);
+    UserEntity findByUserEmail(String email);
 
     // 이메일 중복 검사
     // select count(*) from tbl_user where email = ?
-    boolean existsByEmail(String email);
+    boolean existsByUserEmail(String email);
 }

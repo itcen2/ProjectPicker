@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -20,11 +21,13 @@ import java.util.List;
 public class PostCreateRequestDTO {
 
     @NotBlank
-    @Size(min = 2, max = 10)
     private String title; // 게시판 제목
 
     @NotBlank
     private String content; // 게시판 내용
+    private String userName;
+
+    private String userEmail;
 
     private List<String> hashTags; // 해시태그
 
@@ -35,6 +38,9 @@ public class PostCreateRequestDTO {
         return PostEntity.builder()
                 .postTitle(this.title) // 클라이언트가 입력한 title 값을 엔티티
                 .postContent(this.content)
+                .createDate(LocalDateTime.now())
+//                .userName(this.userName)
+//                .userEmail(this.userEmail)
                 .build();
     }
 }

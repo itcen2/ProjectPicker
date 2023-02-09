@@ -36,7 +36,7 @@ public class UserService {
         final String email = userSignUpDTO.getEmail(); // 클라이언트가 보낸 데이터(이메일)
 
         // 이미 존재하는 이메일인 경우
-        if(userRepository.existsByEmail(email)){
+        if(userRepository.existsByUserEmail(email)){
             log.warn("이미 존재하는 이메일 입니다. - {}",email);
             throw new DuplicatedEmailException("이미 존재하는 이메일입니다.");
         }
@@ -48,7 +48,7 @@ public class UserService {
 
         UserEntity savedUser = userRepository.save(userSignUpDTO.toEntity()); // 위 과정을 저장!
 
-        log.info("회원 가입 성공!! - user_id: {} ", savedUser.getId());
+        log.info("회원 가입 성공!! - user_id: {} ", savedUser.getUserId());
         return new UserSignUpResponseDTO(savedUser); // 클라이언트에게 응답결과에는 savedUSer(암호처리된) 정보 반환
     }
 
@@ -58,7 +58,7 @@ public class UserService {
         if (email == null){
             throw new RuntimeException("이메일 값이 없습니다.");
         }
-        return userRepository.existsByEmail(email);
+        return userRepository.existsByUserEmail(email);
     }
 
 
@@ -66,7 +66,7 @@ public class UserService {
     public LoginResponseDTO getByCredentials(final String email, final String rawPassword){
 
         // 입력한 이메일을 통해 회원정보 조회
-        UserEntity originalUser = userRepository.findByEmail(email); // 이메일로 조회된 회원을 originUser 에 담음.
+        UserEntity originalUser = userRepository.findByUserEmail(email); // 이메일로 조회된 회원을 originUser 에 담음.
 
 
         // email 조회된 회원이 null 일때(없을 때)
@@ -75,7 +75,7 @@ public class UserService {
         }
 
         // 비밀번호 검증
-        if(!passwordEncoder.matches(rawPassword,originalUser.getPassword())){
+        if(!passwordEncoder.matches(rawPassword,originalUser.getUserPassword())){
             throw new RuntimeException("비밀번호가 틀렸습니다.");
         }
 

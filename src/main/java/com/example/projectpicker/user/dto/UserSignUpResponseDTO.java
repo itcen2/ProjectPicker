@@ -25,7 +25,7 @@ public class UserSignUpResponseDTO {
     //엔티티를 DTO로 변경하는 생성자
 
     public UserSignUpResponseDTO(UserEntity userEntity) {
-        this.email = userEntity.getEmail();
+        this.email = userEntity.getUserEmail();
         this.userName = userEntity.getUserName();
         this.joinDate = userEntity.getJoinDate();
     }

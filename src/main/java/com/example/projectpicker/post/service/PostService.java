@@ -1,5 +1,6 @@
 package com.example.projectpicker.post.service;
 
+import com.example.projectpicker.comment.repository.CommentRepository;
 import com.example.projectpicker.post.dto.request.PageRequestDTO;
 import com.example.projectpicker.post.dto.request.PostCreateRequestDTO;
 import com.example.projectpicker.post.dto.request.PostModifyRequestDTO;
@@ -37,6 +38,8 @@ public class PostService {
     private final HashTagRepository hashTagRepository;
 
     private final UserRepository userRepository; // 강사님이 추가하신 코드
+
+    private final CommentRepository commentRepository; // 0209
 
 
 //    /**

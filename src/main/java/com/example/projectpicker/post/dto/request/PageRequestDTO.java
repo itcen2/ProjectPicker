@@ -22,7 +22,7 @@ public class PageRequestDTO {
         this.sizePerPage = 15; // 아래 페이징은 10개씩
     }
     public void setPage(int page){
-        // 만약 1 미만 또는 최대 값 초과 했을 시 --> 1페이지로 반환
+        // 만약 0 미만 또는 최대 값 초과 했을 시 --> 1페이지로 반환
         if(page < 1 || page > Integer.MAX_VALUE) {
             this.page = 1;
             return;
@@ -35,8 +35,7 @@ public class PageRequestDTO {
      *  한페이지에 게시글 리스트 몇개 보여줄건지 설정 part
      */
     public void setSizePerPage(int sizePerPage){
-        // 만약 페이징 15개씩이 아닌 10개 미만 또는 100개 초과시
-        if(sizePerPage < 15 || sizePerPage > 100){
+        if(sizePerPage < 10 || sizePerPage > 100){
             this.sizePerPage = 15;
             return;
         }

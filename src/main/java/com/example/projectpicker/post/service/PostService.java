@@ -294,11 +294,11 @@ public class PostService {
     }
 
     /**
-     * 삭제 중간처리
+     * 삭제 중간처리 ( 해시태그 삭제 후 -> 게시글 삭제 되어야함. 순서중요!)
      */
     public void delete(final String  postId)
             throws RuntimeException {
-        hashTagRepository.deletePostId(postId);
-        postRepository.deleteById(postId);
+        hashTagRepository.deletePostId(postId); // 해시태그 삭제
+        postRepository.deleteById(postId); // 게시글 삭제
     }
 }

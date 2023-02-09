@@ -4,6 +4,7 @@ package com.example.projectpicker.post.controller;
 import com.example.projectpicker.post.dto.request.PageRequestDTO;
 import com.example.projectpicker.post.dto.request.PostCreateRequestDTO;
 import com.example.projectpicker.post.dto.request.PostModifyRequestDTO;
+import com.example.projectpicker.post.dto.response.PostCommentDetailResponseDTO;
 import com.example.projectpicker.post.dto.response.PostDetailResponseDTO;
 import com.example.projectpicker.post.dto.response.PostListResponseDTO;
 import com.example.projectpicker.post.service.PostService;
@@ -41,6 +42,7 @@ public class PostApiController {
                     .body(listResponseDTO)
                     ;
         } catch (Exception e) {
+            log.info(e.getMessage());
             return ResponseEntity
                     .notFound()
                     .build()
@@ -126,7 +128,7 @@ public class PostApiController {
         log.info("/projectpicker/{} GET request", postId);
 
         try {
-            PostDetailResponseDTO dto = postService.getDetail(postId);
+            PostCommentDetailResponseDTO dto = postService.getDetail(postId);
 
             return ResponseEntity
                     .ok()

@@ -25,9 +25,6 @@ public class PostCreateRequestDTO {
 
     @NotBlank
     private String content; // 게시판 내용
-    private String userName;
-
-    private String userEmail;
 
     private List<String> hashTags; // 해시태그
 

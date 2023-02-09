@@ -14,8 +14,5 @@ public class AdminPostDTO {
 
     // 로그인 정보를 받아서 클라이언트에게
     // 관리자 로그인시 받은 이메일 , 패스워드 데이터 (DTO <- Entity)
-    public AdminPostDTO(AdminEntity adminEntity){
-        this.adminEmail = adminEntity.getAdminEmail();
-        this.adminPassword = adminEntity.getAdminPassword();
-    }
+
 }

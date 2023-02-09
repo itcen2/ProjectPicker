@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 public class CommentRequestDTO {
         private String comment;
 
-
-        public CommentEntity toEntity(UserEntity userEntity, PostEntity postEntity) {
+        // 댓글 요청 DTO ( DTO -- > Entity)
+        public CommentEntity toEntity(UserEntity userEntity,PostEntity postEntity) {
             return  CommentEntity.builder()
                     .comment(comment)
                     .userEntity(userEntity)

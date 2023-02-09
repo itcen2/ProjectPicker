@@ -56,7 +56,7 @@ public class PostEntity {
     private String userName;
 
     /**
-      해시태그와 관계형 매핑
+     해시태그와 관계형 매핑
      */
 
     @OneToMany(mappedBy = "postEntity")
@@ -67,5 +67,6 @@ public class PostEntity {
      */
     @OneToMany(mappedBy = "postEntity")
     private List<CommentEntity> commentEntities = new ArrayList<>();
+
 
 }

@@ -1,12 +1,11 @@
 package com.example.projectpicker.post.service;
 
+import com.example.projectpicker.comment.entity.CommentEntity;
+import com.example.projectpicker.comment.repository.CommentRepository;
 import com.example.projectpicker.post.dto.request.PageRequestDTO;
 import com.example.projectpicker.post.dto.request.PostCreateRequestDTO;
 import com.example.projectpicker.post.dto.request.PostModifyRequestDTO;
-import com.example.projectpicker.post.dto.response.PageResponseDTO;
-import com.example.projectpicker.post.dto.response.PostDetailResponseDTO;
-import com.example.projectpicker.post.dto.response.PostListResponseDTO;
-import com.example.projectpicker.post.dto.response.PostResponseDTO;
+import com.example.projectpicker.post.dto.response.*;
 import com.example.projectpicker.post.entity.HashTagEntity;
 import com.example.projectpicker.post.entity.PostEntity;
 import com.example.projectpicker.post.repository.HashTagRepository;
@@ -22,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.xml.stream.events.Comment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +35,8 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final HashTagRepository hashTagRepository;
+
+    private final CommentRepository commentRepository;
 
     private final UserRepository userRepository; // 강사님이 추가하신 코드
 
@@ -224,14 +226,15 @@ public class PostService {
      * 개별 조회 중간처리
      */
 
-    public PostDetailResponseDTO getDetail(String postId) {
+    public PostCommentDetailResponseDTO getDetail(String postId) {
         PostEntity post = postRepository
                 .findById(postId)
                 .orElseThrow(() ->
                         new RuntimeException("게시물이 존재하지 않음!!"));
+        List<CommentEntity> comments = commentRepository.getComments(postId);
 
         // 엔터티를 DTO로 변환
-        return new PostDetailResponseDTO(post);
+        return new PostCommentDetailResponseDTO(post, comments);
     }
 
 

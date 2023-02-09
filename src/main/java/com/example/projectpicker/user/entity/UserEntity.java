@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter @Getter @ToString
+@Setter @Getter @ToString(exclude = "PostId")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id") // id 만 비교해라. 굳이 비번,이름까지 비교할 필요x

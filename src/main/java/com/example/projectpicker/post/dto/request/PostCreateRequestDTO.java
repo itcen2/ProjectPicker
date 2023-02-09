@@ -21,7 +21,6 @@ import java.util.List;
 public class PostCreateRequestDTO {
 
     @NotBlank
-    @Size(min = 2, max = 10)
     private String title; // 게시판 제목
 
     @NotBlank

@@ -265,6 +265,7 @@ public class PostService {
      */
     public void delete(final String  postId)
             throws RuntimeException {
+        hashTagRepository.deletePostId(postId);
         postRepository.deleteById(postId);
     }
 }

@@ -1,9 +1,7 @@
 package com.example.projectpicker.post.service;
 
-<<<<<<< HEAD
-=======
+
 import com.example.projectpicker.comment.entity.CommentEntity;
->>>>>>> 67d47789872dcdbe9e68a9e9f16b7352acb0cfbf
 import com.example.projectpicker.comment.repository.CommentRepository;
 import com.example.projectpicker.post.dto.request.PageRequestDTO;
 import com.example.projectpicker.post.dto.request.PostCreateRequestDTO;
@@ -27,7 +25,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.xml.stream.events.Comment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +43,7 @@ public class PostService {
 
     private final UserRepository userRepository; // 강사님이 추가하신 코드
 
-    private final CommentRepository commentRepository; // 0209
+
 
 
 //    /**
@@ -120,6 +117,17 @@ public class PostService {
         return listResponseDTO;
     }
 
+    // 개별 조회 (댓글)
+    public PostCommentDetailResponseDTO getDetail(String postId) {
+        PostEntity post = postRepository
+                .findById(postId)
+                .orElseThrow(() ->
+                        new RuntimeException("게시물이 존재하지 않음!!"));
+        List<CommentEntity> comments = commentRepository.getComments(postId);
+
+        // 엔터티를 DTO로 변환
+        return new PostCommentDetailResponseDTO(post, comments);
+    }
 
     /**
      * 특정 검색 리스트 조회 (제목 검색)

@@ -15,20 +15,21 @@ public class CommentController {
     // 댓글 생성
     @PostMapping("/{postId}/comments")
     public ResponseEntity<?> commentSave(@PathVariable String postId, @RequestBody CommentRequestDTO dto) {
-        return ResponseEntity.ok(commentService.commentSave(dto.getUserEntity().getUserEmail(), postId, dto));
+        commentService.commentSave(postId, dto);
+//        return ResponseEntity.ok(commentService.commentSave(dto.getUserEntity().getUserEmail(), postId, dto));
     }
 
     // 댓글 수정
-    @PutMapping({"/posts/{id}/comments/{id}"})
-    public ResponseEntity update(@PathVariable String id, @RequestBody CommentRequestDTO dto) {
-        commentService.update(id, dto);
-        return ResponseEntity.ok(id);
+    @PutMapping({"/posts/{id}/comments/{ids}"})
+    public ResponseEntity update(@PathVariable String ids, @RequestBody CommentRequestDTO dto) {
+        commentService.update(ids, dto);
+        return ResponseEntity.ok(ids);
     }
 
     // 댓글 삭제
-    @DeleteMapping("/posts/{id}/comments/{id}")
-    public ResponseEntity delete(@PathVariable String id) {
-        commentService.delete(id);
-        return ResponseEntity.ok(id);
+    @DeleteMapping("/posts/{id}/comments/{ids}")
+    public ResponseEntity delete(@PathVariable String ids) {
+        commentService.delete(ids);
+        return ResponseEntity.ok(ids);
     }
 }

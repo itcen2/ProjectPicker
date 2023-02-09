@@ -50,7 +50,7 @@ public class PostResponseDTO {
                 .map(HashTagEntity::getTagName)
                 .collect(Collectors.toList());
 
-        this.comments = postEntity.getComments().stream().map(CommentResponseDTO::new).collect(Collectors.toList());
+//        this.comments = postEntity.getCommentEntities().stream().map(CommentResponseDTO::new).collect(Collectors.toList());
 
 
     }

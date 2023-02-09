@@ -19,27 +19,17 @@ public class PostDetailResponseDTO extends PostResponseDTO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:ss")
     private LocalDateTime modifyDate; // 게시글 수정 시간
 
-<<<<<<< HEAD
-
-
     private String comment; // 댓글
 
 
-    public PostDetailResponseDTO(PostEntity postEntity, CommentEntity commentEntity) {
-=======
-    private String comment;
-
     public PostDetailResponseDTO(PostEntity postEntity){
->>>>>>> 67d47789872dcdbe9e68a9e9f16b7352acb0cfbf
         super(postEntity);
         this.modifyDate = postEntity.getModifyDate();
-        this.comment = commentEntity.getComment();
-
     }
-
     public PostDetailResponseDTO(PostEntity postEntity, CommentEntity commentEntity){
         super(postEntity);
         this.comment = commentEntity.getComment();
         this.modifyDate = postEntity.getModifyDate();
     }
 }
+

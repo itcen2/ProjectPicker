@@ -28,10 +28,9 @@ public class AdminController {
 
     // admin 로그인
     @PostMapping
-    public ResponseEntity<?> AdminLogin(@Validated @RequestBody AdminEntity adminPostEntity,
+    public ResponseEntity<?> AdminLogin(@Validated @RequestBody AdminPostDTO adminPostDTO,
                                         BindingResult result
     ){
-        AdminPostDTO adminPostDTO = new AdminPostDTO(adminPostEntity);
         AdminResponseLoginDTO flag = null;
         if(adminPostDTO == null){
             return ResponseEntity.badRequest().body("로그인 정보를 입력 해 주세요.");
@@ -56,8 +55,8 @@ public class AdminController {
     // 사용자 등록시에만 활성화
     @PostMapping("/signUp")
     public ResponseEntity<?> signUp(@Validated @RequestBody AdminSignUpDTO adminSignUpDTO){
-        AdminPostDTO adminPostDTO = adminService.signUp(adminSignUpDTO);
+        adminService.signUp(adminSignUpDTO);
         return ResponseEntity.ok()
-                .body(adminPostDTO);
+                .body("성공");
     }
 }

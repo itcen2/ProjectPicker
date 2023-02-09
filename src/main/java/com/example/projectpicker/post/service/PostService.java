@@ -223,7 +223,7 @@ public class PostService {
         List<HashTagEntity> hashTagEntities = new ArrayList<>();
         for (String ht : hashTags) {
             HashTagEntity tagEntity = HashTagEntity.builder()
-                    .postEntity(savedPost)
+                    .post(savedPost)
                     .tagName(ht)
                     .build();
 

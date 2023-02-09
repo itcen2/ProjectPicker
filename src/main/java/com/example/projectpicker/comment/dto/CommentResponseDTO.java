@@ -1,6 +1,8 @@
 package com.example.projectpicker.comment.dto;
 
 import com.example.projectpicker.comment.entity.CommentEntity;
+import com.example.projectpicker.post.entity.PostEntity;
+import com.example.projectpicker.user.entity.UserEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
@@ -28,7 +30,7 @@ public class CommentResponseDTO {
        this.createAt = commentEntity.getCreateAt();
        this.modifyAt = commentEntity.getModifyAt();
        this.userName = commentEntity.getUserEntity().getUserName();
-       this.userEmail = commentEntity.getUserEntity().getUserEmail();
+       this.userEmail = commentEntity.getUserEntity().getEmail();
        this.postId = commentEntity.getPostEntity().getPostId();
    }
 }

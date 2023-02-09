@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter @Setter @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "commentId")
+@EqualsAndHashCode
 @Builder
 @Table(name = "tbl_comment")
 @Entity
@@ -34,20 +34,17 @@ public class CommentEntity {
     @UpdateTimestamp
     private LocalDateTime modifyAt;  // 댓글 수정 시간
 
-    /**
-     * 회원 와 관계 설정
-     */
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    /**
-     * 게시판 와 관계 설정
-     */
     @ManyToOne
     @JoinColumn(name = "post_id")
     private PostEntity postEntity;
 
-
+    // 댓글 수정을 위한 setter
+    public void update(String comment) {
+        this.comment = comment;
+    }
 
 }

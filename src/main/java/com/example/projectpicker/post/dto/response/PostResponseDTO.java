@@ -1,5 +1,8 @@
 package com.example.projectpicker.post.dto.response;
 
+import com.example.projectpicker.comment.dto.CommentRequestDTO;
+import com.example.projectpicker.comment.dto.CommentResponseDTO;
+import com.example.projectpicker.comment.entity.CommentEntity;
 import com.example.projectpicker.post.entity.HashTagEntity;
 import com.example.projectpicker.post.entity.PostEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -31,6 +34,8 @@ public class PostResponseDTO {
 
     // PostEntity 로 부터 엔티티를 받아서 DTO 로 만들어주는 생성자
 
+    private List<CommentResponseDTO> comments;
+
     public PostResponseDTO(PostEntity postEntity) {
         this.PostId = postEntity.getPostId(); // 게시글 식별 코드
         this.userName = postEntity.getUserEntity().getUserName(); // 게시글 작성자 이름 - 강사님이 추가하신 코드
@@ -44,6 +49,8 @@ public class PostResponseDTO {
                 .stream()
                 .map(HashTagEntity::getTagName)
                 .collect(Collectors.toList());
+
+        this.comments = postEntity.getComments().stream().map(CommentResponseDTO::new).collect(Collectors.toList());
 
 
     }

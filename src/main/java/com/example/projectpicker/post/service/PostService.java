@@ -1,5 +1,9 @@
 package com.example.projectpicker.post.service;
 
+<<<<<<< HEAD
+=======
+import com.example.projectpicker.comment.entity.CommentEntity;
+>>>>>>> 67d47789872dcdbe9e68a9e9f16b7352acb0cfbf
 import com.example.projectpicker.comment.repository.CommentRepository;
 import com.example.projectpicker.post.dto.request.PageRequestDTO;
 import com.example.projectpicker.post.dto.request.PostCreateRequestDTO;
@@ -23,6 +27,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.xml.stream.events.Comment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +41,8 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final HashTagRepository hashTagRepository;
+
+    private final CommentRepository commentRepository;
 
     private final UserRepository userRepository; // 강사님이 추가하신 코드
 
@@ -228,6 +235,9 @@ public class PostService {
      */
 
     public PostDetailResponseDTO getDetail(String postId) {
+        CommentEntity comment = commentRepository
+                .findById(postId)
+                .get();
         PostEntity post = postRepository
                 .findById(postId)
                 .orElseThrow(() ->

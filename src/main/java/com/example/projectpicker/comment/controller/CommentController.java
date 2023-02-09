@@ -1,7 +1,6 @@
 package com.example.projectpicker.comment.controller;
 
 import com.example.projectpicker.comment.dto.CommentRequestDTO;
-import com.example.projectpicker.comment.entity.CommentEntity;
 import com.example.projectpicker.comment.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,20 @@ public class CommentController {
     // 댓글 생성
     @PostMapping("/{postId}/comments")
     public ResponseEntity<?> commentSave(@PathVariable String postId, @RequestBody CommentRequestDTO dto) {
-        CommentEntity commentEntity = commentService.commentSave(postId, dto);
-        return ResponseEntity.ok().body("save");
+        return ResponseEntity.ok(commentService.commentSave(dto.getUserEntity().getUserEmail(), postId, dto));
+    }
+
+    // 댓글 수정
+    @PutMapping({"/posts/{id}/comments/{id}"})
+    public ResponseEntity update(@PathVariable String id, @RequestBody CommentRequestDTO dto) {
+        commentService.update(id, dto);
+        return ResponseEntity.ok(id);
+    }
+
+    // 댓글 삭제
+    @DeleteMapping("/posts/{id}/comments/{id}")
+    public ResponseEntity delete(@PathVariable String id) {
+        commentService.delete(id);
+        return ResponseEntity.ok(id);
     }
 }

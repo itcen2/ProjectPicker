@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Setter @Getter @ToString
+
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "postId")

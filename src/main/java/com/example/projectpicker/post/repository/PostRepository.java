@@ -37,14 +37,18 @@ public interface PostRepository extends JpaRepository<PostEntity, String> {
     Page<PostEntity> findByAllowTrueAndPostTitleContaining(String keyword, Pageable pageable);
 
     // 해시태그로 검색 (해시태그 검색 2개일때)
-    @Query(value = "SELECT tbl_post.post_id FROM tbl_hashtag JOIN tbl_post ON tbl_post.post_id = tbl_hashtag.post_id " +
+    @Query(value = "SELECT tbl_post.post_id " +
+            "FROM tbl_hashtag JOIN tbl_post ON tbl_post.post_id = tbl_hashtag.post_id " +
             "WHERE tbl_hashtag.tag_name IN (:keyword1, :keyword2) " +
             "GROUP BY post_id HAVING COUNT(tag_id) >= 2", nativeQuery = true)
-    List<String> HashTagsSearch(@Param("keyword1") String keyword1, @Param("keyword2") String keyword2);
+    List<String> HashTagsSearch2(@Param("keyword1") String keyword1, @Param("keyword2") String keyword2);
 
     // 해시태그 검색 (해시태그 검색 1개일때)
-    @Query(value = "SELECT tbl_post.post_id FROM tbl_hashtag JOIN tbl_post ON tbl_post.post_id = tbl_hashtag.post_id WHERE tbl_hashtag.tag_name IN (:keyword1) GROUP BY post_id HAVING COUNT(tag_id) >= 2", nativeQuery = true)
-    List<String> HashTagsSearch(@Param("keyword1") String keyword1);
+    @Query(value = "SELECT tbl_post.post_id " +
+            "FROM tbl_hashtag JOIN tbl_post ON tbl_post.post_id = tbl_hashtag.post_id " +
+            "WHERE tbl_hashtag.tag_name IN (:keyword3) "+
+            "GROUP BY post_id HAVING COUNT(tag_id) >= 1;", nativeQuery = true)
+    List<String> HashTagsSearch1(@Param("keyword3") String keyword3);
 }
 
 

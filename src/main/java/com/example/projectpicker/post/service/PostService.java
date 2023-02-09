@@ -148,9 +148,11 @@ public class PostService {
     /**
      * 특정 해시태그 검색 리스트 조회 중간처리 (해시태그 1개일때 , 해시태그 2개일때)
      */
+
+    //해시태그 2개 검색
     public PostListResponseDTO searchHashTagList2(String keyword1, String keyword2, PageRequestDTO pageRequestDTO) {
 
-        List<String> postId = postRepository.HashTagsSearch(keyword1, keyword2);
+        List<String> postId = postRepository.HashTagsSearch2(keyword1, keyword2);
 
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPage() - 1,
@@ -181,9 +183,11 @@ public class PostService {
         return listResponseDTO;
     }
 
-    public PostListResponseDTO searchHashTagList1(String keyword1, PageRequestDTO pageRequestDTO) {
 
-        List<String> postId = postRepository.HashTagsSearch(keyword1);
+    //해시태그 1개 검색
+    public PostListResponseDTO searchHashTagList1(String keyword3, PageRequestDTO pageRequestDTO) {
+
+        List<String> postId = postRepository.HashTagsSearch1(keyword3);
 
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPage() - 1,

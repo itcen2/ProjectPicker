@@ -34,13 +34,20 @@ public class CommentEntity {
     @UpdateTimestamp
     private LocalDateTime modifyAt;  // 댓글 수정 시간
 
-    @ManyToOne
+    /**
+     * 회원 와 관계 설정
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    @ManyToOne
+    /**
+     * 게시판 와 관계 설정
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private PostEntity postEntity;
+
 
     // 댓글 수정을 위한 setter
     public void update(String comment) {

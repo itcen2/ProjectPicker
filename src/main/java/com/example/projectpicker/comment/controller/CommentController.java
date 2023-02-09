@@ -18,6 +18,7 @@ public class CommentController {
     // 댓글 생성
     @PostMapping("/{postId}/comments")
     public ResponseEntity<?> commentSave(@PathVariable String postId, @RequestBody CommentRequestDTO dto) {
+        commentService.commentSave(postId, dto);
         return ResponseEntity.ok().body(postService.getDetail(postId));
     }
 

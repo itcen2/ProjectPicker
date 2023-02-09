@@ -22,7 +22,7 @@ public class CommentService {
 
     // 댓글 생성
     @Transactional
-    public CommentEntity commentSave(String postId, CommentRequestDTO commentRequestDTO) {
+    public void commentSave(String postId, CommentRequestDTO commentRequestDTO) {
         PostEntity post = postRepository.findById(postId).orElseThrow(() ->
                 new IllegalArgumentException("댓글 쓰기 실패 - id : " + postId + " 의 게시물이 존재하지 않습니다." ));
 //        commentRequestDTO.setUserEntity(user);
@@ -33,7 +33,6 @@ public class CommentService {
         CommentEntity comment = commentRequestDTO.toEntity(user, post);
         commentRepository.save(comment);
 
-        return comment;
     }
 
     // 댓글 수정

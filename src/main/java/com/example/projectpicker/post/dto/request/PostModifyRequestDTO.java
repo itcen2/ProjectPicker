@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Setter @Getter @ToString
 @AllArgsConstructor
@@ -14,9 +15,12 @@ import javax.validation.constraints.Size;
 @EqualsAndHashCode
 public class PostModifyRequestDTO {
 
-    @NotBlank
+
     private String title; // 게시판 제목
 
-    @NotBlank
     private String content; // 게시판 내용
+
+    private boolean status; // 프로젝트 모집중 마감
+
+    private List<String> hashTags; // 게시글 해쉬태그
 }

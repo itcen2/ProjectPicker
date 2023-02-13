@@ -30,6 +30,8 @@ public class PostResponseDTO {
     private List<String> hashTags; // 게시글 해쉬태그
     @JsonFormat(pattern = "yyyy/MM/dd hh:mm:ss")
     private LocalDateTime createDate; // 게시글 생성 시간
+    
+    private boolean status; // 프로젝트 모집중, 마감
 
 
     // PostEntity 로 부터 엔티티를 받아서 DTO 로 만들어주는 생성자
@@ -43,6 +45,7 @@ public class PostResponseDTO {
         this.title = postEntity.getPostTitle(); // 게시글 제목
         this.content = postEntity.getPostContent(); // 게시글 내용
         this.createDate = postEntity.getCreateDate(); // 게시글 생성 시간
+        this.status = postEntity.isStatus();    // 프로젝트 모집중, 마감
 
 
         this.hashTags = postEntity.getHashTags() // 게시글 해쉬태그

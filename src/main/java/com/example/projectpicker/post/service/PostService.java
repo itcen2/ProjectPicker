@@ -292,11 +292,31 @@ public class PostService {
         // 수정 진행
         String modTitle = modifyDTO.getTitle();
         String modContent = modifyDTO.getContent();
+        List<String> modHashTags = modifyDTO.getHashTags();
+        boolean modStatus = modifyDTO.isStatus();
 
         if (modTitle != null) entity.setPostTitle(modTitle);
         if (modContent != null) entity.setPostContent(modContent);
 
+        if (modStatus != entity.isStatus()) entity.setStatus(modStatus);
+
         PostEntity modifyPost = postRepository.save(entity);
+
+        if (modHashTags != null) {
+            hashTagRepository.deletePostId(postId); // 해시태그 삭제
+            List<HashTagEntity> hashTagEntities = new ArrayList<>();
+            for (String ht : modHashTags) {
+                HashTagEntity tagEntity = HashTagEntity.builder()
+                        .postEntity(modifyPost)
+                        .tagName(ht)
+                        .build();
+
+                HashTagEntity savedTag = hashTagRepository.save(tagEntity);
+                hashTagEntities.add(savedTag);
+            }
+            modifyPost.setHashTags(hashTagEntities);
+        };
+
         return new PostDetailResponseDTO(modifyPost);
     }
 

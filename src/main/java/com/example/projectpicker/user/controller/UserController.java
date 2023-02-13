@@ -1,9 +1,7 @@
 package com.example.projectpicker.user.controller;
 
-import com.example.projectpicker.user.dto.LoginRequestDTO;
-import com.example.projectpicker.user.dto.LoginResponseDTO;
-import com.example.projectpicker.user.dto.UserSignUpDTO;
-import com.example.projectpicker.user.dto.UserSignUpResponseDTO;
+import com.example.projectpicker.post.dto.response.PostDetailResponseDTO;
+import com.example.projectpicker.user.dto.*;
 import com.example.projectpicker.user.exception.DuplicatedEmailException;
 import com.example.projectpicker.user.exception.NoRegisteredArgumentsException;
 import com.example.projectpicker.user.service.UserService;
@@ -51,6 +49,25 @@ public class UserController {
             return ResponseEntity
                     .badRequest()
                     .body(e.getMessage());
+        }
+    }
+
+    // 비밀번호 수정 요청 처리
+    @RequestMapping(
+            value = "updateUser/{userId}"
+            , method = {RequestMethod.PUT, RequestMethod.PATCH}
+    )
+    public String updateUserInfo(
+            @PathVariable("userId") String userId
+            , @RequestBody UserInfoUpdateRequestDTO requestDTO
+    ) {
+        try {
+            String s = userService.updateUserInfo(userId, requestDTO);
+            return s;
+        } catch (RuntimeException e) {
+            log.error("update fail : caused by - {}", e.getMessage());
+            String s = userService.updateUserInfo(userId, requestDTO);
+            return s;
         }
     }
 

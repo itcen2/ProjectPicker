@@ -325,6 +325,7 @@ public class PostService {
      */
     public void delete(final String  postId)
             throws RuntimeException {
+        commentRepository.deletePostId(postId); // 댓글 삭제
         hashTagRepository.deletePostId(postId); // 해시태그 삭제
         postRepository.deleteById(postId); // 게시글 삭제
     }

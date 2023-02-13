@@ -22,16 +22,12 @@ public class PostDetailResponseDTO extends PostResponseDTO {
 
     private String content;
 
-    private List<String> hashTags; // 게시글 해쉬태그
+
 
     public PostDetailResponseDTO(PostEntity postEntity){
         super(postEntity);
         this.modifyDate = postEntity.getModifyDate();
         this.content = postEntity.getPostContent();
 
-        this.hashTags = postEntity.getHashTags() // 게시글 해쉬태그
-                .stream()
-                .map(HashTagEntity::getTagName)
-                .collect(Collectors.toList());
     }
 }

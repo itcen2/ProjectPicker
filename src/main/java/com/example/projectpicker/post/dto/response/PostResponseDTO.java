@@ -26,32 +26,20 @@ public class PostResponseDTO {
 
     private String userEmail; // 작성자 이메일
     private String title; // 게시글 제목
-    private String content; // 게시글 내용
-    private List<String> hashTags; // 게시글 해쉬태그
     @JsonFormat(pattern = "yyyy/MM/dd hh:mm:ss")
     private LocalDateTime createDate; // 게시글 생성 시간
+    
+    private boolean status; // 프로젝트 모집중, 마감
 
 
     // PostEntity 로 부터 엔티티를 받아서 DTO 로 만들어주는 생성자
-
-//    private List<CommentResponseDTO> comments;
 
     public PostResponseDTO(PostEntity postEntity) {
         this.PostId = postEntity.getPostId(); // 게시글 식별 코드
         this.userName = postEntity.getUserEntity().getUserName(); // 게시글 작성자 이름 - 강사님이 추가하신 코드
         this.userEmail = postEntity.getUserEntity().getUserEmail(); // 게시글 작성자 이메일 -  강사님이 추가하신 코드
         this.title = postEntity.getPostTitle(); // 게시글 제목
-        this.content = postEntity.getPostContent(); // 게시글 내용
         this.createDate = postEntity.getCreateDate(); // 게시글 생성 시간
-
-
-        this.hashTags = postEntity.getHashTags() // 게시글 해쉬태그
-                .stream()
-                .map(HashTagEntity::getTagName)
-                .collect(Collectors.toList());
-
-//        this.comments = postEntity.getCommentEntities().stream().map(CommentResponseDTO::new).collect(Collectors.toList());
-
-
+        this.status = postEntity.isStatus();    // 프로젝트 모집중, 마감
     }
 }

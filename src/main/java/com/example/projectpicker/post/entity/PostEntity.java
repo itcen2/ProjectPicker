@@ -43,6 +43,8 @@ public class PostEntity {
     private LocalDateTime modifyDate; // 게시글 수정 시간
 
     private boolean allow; // 일반 회원이 게시글 등록시, 관리자가 게시글 등록 허용여부에 사용되는 엔티티
+    
+    private boolean status; // 프로젝트 모집중, 마감
 
     /**
      회원 와 관계 설정

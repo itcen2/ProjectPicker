@@ -13,15 +13,12 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class PostCommentDetailResponseDTO extends PostResponseDTO{
+public class PostCommentDetailResponseDTO extends PostDetailResponseDTO{
 
-    @JsonFormat(pattern = "yyyy/MM/dd hh:mm:ss")
-    private LocalDateTime modDate;
 
     private List<String> comment;
     public PostCommentDetailResponseDTO(PostEntity entity, List<CommentEntity> commentEntity) {
         super(entity);
-        this.modDate = entity.getModifyDate();
         this.comment = commentEntity.stream()
                 .map(CommentEntity::getComment)
                 .collect(Collectors.toList());

@@ -54,14 +54,13 @@ public class AdminService {
     }
 
     // 관리자 회원가입 로직
-    public AdminPostDTO signUp(AdminSignUpDTO adminSignUpDTO){
+    public void signUp(AdminSignUpDTO adminSignUpDTO){
 
         String rawPassword = adminSignUpDTO.getAdminPassword(); // 평문 암호
         String encodedPassword = passwordEncoder.encode(rawPassword); // 인코딩을 통한 비밀번호 암호화
         adminSignUpDTO.setAdminPassword(encodedPassword); // 암호화된 비밀번호를 adminSignUpDTO(dto->entity) 에 설정
 
-        AdminEntity save = adminRepository.save(adminSignUpDTO.toEntity());
+        adminRepository.save(adminSignUpDTO.toEntity());
 
-        return new AdminPostDTO(save);
     }
 }

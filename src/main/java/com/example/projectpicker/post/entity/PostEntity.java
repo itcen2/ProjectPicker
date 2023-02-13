@@ -52,6 +52,9 @@ public class PostEntity {
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
+    @Column(name = "user_name")
+    private String userName;
+
     /**
      해시태그와 관계형 매핑
      */

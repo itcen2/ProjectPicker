@@ -34,7 +34,7 @@ public class PostResponseDTO {
 
     // PostEntity 로 부터 엔티티를 받아서 DTO 로 만들어주는 생성자
 
-    private List<CommentResponseDTO> comments;
+//    private List<CommentResponseDTO> comments;
 
     public PostResponseDTO(PostEntity postEntity) {
         this.PostId = postEntity.getPostId(); // 게시글 식별 코드
@@ -49,6 +49,8 @@ public class PostResponseDTO {
                 .stream()
                 .map(HashTagEntity::getTagName)
                 .collect(Collectors.toList());
+
+//        this.comments = postEntity.getCommentEntities().stream().map(CommentResponseDTO::new).collect(Collectors.toList());
 
 
     }

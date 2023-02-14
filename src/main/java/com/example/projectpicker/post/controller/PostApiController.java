@@ -31,10 +31,11 @@ public class PostApiController {
 
 
     // 게시글 목록 조회
-    @GetMapping
-    public ResponseEntity<?> list(PageRequestDTO pageRequestDTO) {
+    @GetMapping("/{i}")
+    public ResponseEntity<?> list(PageRequestDTO pageRequestDTO,@PathVariable int i) {
         log.info("request page info - {}", pageRequestDTO);
 
+        pageRequestDTO.setPage(i);
         try {
             PostListResponseDTO listResponseDTO = postService.getList(pageRequestDTO);
             return ResponseEntity
@@ -123,7 +124,7 @@ public class PostApiController {
 
 
     // 게시글 개별 조회
-    @GetMapping("/{postId}")
+    @GetMapping("/detail/{postId}")
     public ResponseEntity<?> detail(@PathVariable String postId) {
         log.info("/projectpicker/{} GET request", postId);
 

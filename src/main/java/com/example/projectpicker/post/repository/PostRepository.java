@@ -30,7 +30,7 @@ public interface PostRepository extends JpaRepository<PostEntity, String> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM tbl_post  WHERE user_id =:ids")
     Page<PostEntity> getMyPosts(@Param("ids") String ids, Pageable pageable);
-    @Query(nativeQuery = true, value = "SELECT * FROM tbl_post  WHERE tbl_Post.post_id IN(:ids)")
+    @Query(nativeQuery = true, value = "SELECT * FROM tbl_post  WHERE tbl_post.post_id IN(:ids)")
     Page<PostEntity> findPostId(@Param("ids") List<String> ids, Pageable pageable);
 
     // 모든 포스트 제목 검색 (허용여부 상관없이)

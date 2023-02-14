@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/projectpicker")
-@CrossOrigin
+@CrossOrigin(origins = "http://todo-buket.s3-website.ap-northeast-2.amazonaws.com/")
 public class CommentController {
     private final CommentService commentService;
 

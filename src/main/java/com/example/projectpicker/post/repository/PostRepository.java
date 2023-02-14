@@ -1,5 +1,6 @@
 package com.example.projectpicker.post.repository;
 
+import com.example.projectpicker.post.dto.response.PostListDataResponseDTO;
 import com.example.projectpicker.post.entity.PostEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,11 +23,13 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<PostEntity, String> {
 
 
-//    List<PostEntity> findByAllowTrue(Pageable pageable);
+    //    List<PostEntity> findByAllowTrue(Pageable pageable);
     Page<PostEntity> findByAllowTrue(Pageable pageable);
 
     List<PostEntity> findByAllowTrue();
 
+    @Query(nativeQuery = true, value = "SELECT * FROM tbl_post  WHERE user_id =:ids")
+    Page<PostEntity> getMyPosts(@Param("ids") String ids, Pageable pageable);
     @Query(nativeQuery = true, value = "SELECT * FROM tbl_post  WHERE tbl_Post.post_id IN(:ids)")
     Page<PostEntity> findPostId(@Param("ids") List<String> ids, Pageable pageable);
 
@@ -39,7 +42,7 @@ public interface PostRepository extends JpaRepository<PostEntity, String> {
     // 해시태그로 검색 (해시태그 검색 2개일때)
     @Query(value = "SELECT tbl_post.post_id " +
             "FROM tbl_hashtag JOIN tbl_post ON tbl_post.post_id = tbl_hashtag.post_id " +
-            "WHERE tbl_hashtag.tag_name IN (:keyword1, :keyword2) " +
+            "WHERE tbl_hashtag.tag_name IN (:keyword1, :keyword2)" +
             "GROUP BY post_id HAVING COUNT(tag_id) >= 2", nativeQuery = true)
     List<String> HashTagsSearch2(@Param("keyword1") String keyword1, @Param("keyword2") String keyword2);
 
@@ -49,7 +52,12 @@ public interface PostRepository extends JpaRepository<PostEntity, String> {
             "WHERE tbl_hashtag.tag_name IN (:keyword3) "+
             "GROUP BY post_id HAVING COUNT(tag_id) >= 1;", nativeQuery = true)
     List<String> HashTagsSearch1(@Param("keyword3") String keyword3);
-}
 
+    @Query(value = "DELETE FROM tbl_post WHERE user_id = :userId", nativeQuery = true)
+    void deleteByUserId(@Param("userId") String userId);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM tbl_post  WHERE user_id =:ids")
+    List<PostEntity> getMyPostsList(@Param("ids") String ids);
+}
 
 

@@ -20,7 +20,7 @@ public class PageResponseDTO<T> {
     private int startPage; // 시작 페이지
     private int endPage; // 마지막 페이지
     private int currentPage; // 현재 페이지
-
+    private int sizePerPage;
     private boolean prev; // 이전
     private boolean next; // 다음
     private int totalCount; // 전체 페이지 수
@@ -32,7 +32,7 @@ public class PageResponseDTO<T> {
     public PageResponseDTO(Page<T> pageData){
         this.totalCount = (int) pageData.getTotalElements();
         this.currentPage = pageData.getPageable().getPageNumber() + 1;
-        this.endPage = (int) (Math.ceil(currentPage) / (PAGE_COUNT) * PAGE_COUNT);
+        this.endPage = (int) (Math.ceil(currentPage) / (PAGE_COUNT) + PAGE_COUNT);
         this.startPage = endPage - PAGE_COUNT + 1;
 
         // 페이지 마지막 구간에 endPage 값 보정

@@ -1,19 +1,29 @@
 package com.example.projectpicker.user.service;
 
+import com.example.projectpicker.post.dto.request.PageRequestDTO;
+import com.example.projectpicker.post.dto.response.PostListDataResponseDTO;
+import com.example.projectpicker.post.entity.PostEntity;
+import com.example.projectpicker.post.repository.PostRepository;
+import com.example.projectpicker.post.service.PostService;
 import com.example.projectpicker.security.TokenProvider;
-import com.example.projectpicker.user.dto.LoginResponseDTO;
-import com.example.projectpicker.user.dto.UserInfoUpdateRequestDTO;
-import com.example.projectpicker.user.dto.UserSignUpDTO;
-import com.example.projectpicker.user.dto.UserSignUpResponseDTO;
+import com.example.projectpicker.user.dto.*;
 import com.example.projectpicker.user.entity.UserEntity;
 import com.example.projectpicker.user.exception.DuplicatedEmailException;
 import com.example.projectpicker.user.exception.NoRegisteredArgumentsException;
 import com.example.projectpicker.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
 
 
 @Service
@@ -22,6 +32,8 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PostRepository postRepository;
+    private final PostService postService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -52,24 +64,6 @@ public class UserService {
 
         log.info("회원 가입 성공!! - user_id: {} ", savedUser.getUserId());
         return new UserSignUpResponseDTO(savedUser); // 클라이언트에게 응답결과에는 savedUSer(암호처리된) 정보 반환
-    }
-
-    public String updateUserInfo(final String userId, final UserInfoUpdateRequestDTO userInfoUpdateRequestDTO)
-            throws RuntimeException{
-
-        UserEntity entity = userRepository.findById(userId)
-                .orElseThrow(() ->
-                        new RuntimeException("수정할 유저가 존재하지 않습니다."));
-        //패스워드 인코딩 (암호화처리)
-        String rawUpPassword = userInfoUpdateRequestDTO.getPassword(); // 평문 비밀번호
-        if(rawUpPassword != null && !passwordEncoder.matches(rawUpPassword,entity.getUserPassword())) {
-            String encodedPassword = passwordEncoder.encode(rawUpPassword); //passwordEncoder 외부 라이브러리를 이용해 비밀번호 암호화 처리
-            entity.setUserPassword(encodedPassword);
-
-            UserEntity savedUser = userRepository.save(entity); // 위 과정을 저장!
-            return "Success";
-        }
-        return "수정 전과 다른 비밀번호를 입력해 주세요.";
     }
 
 
@@ -108,7 +102,56 @@ public class UserService {
     }
 
 
+    public MypageResponseDTO getUserData(final MypageRequestDTO mypageRequestDTO, PageRequestDTO pageRequestDTO){
+        Pageable pageable = PageRequest.of(
+                pageRequestDTO.getPage() - 1,
+                pageRequestDTO.getSizePerPage(),
+                Sort.Direction.DESC,
+                "create_Date"
+        );
 
+        UserEntity userData = userRepository.findById(mypageRequestDTO.getUserId()).get();
+        Page<PostEntity> userPosts = postRepository.getMyPosts(mypageRequestDTO.getUserId(), pageable);
+        List<PostEntity> list = userPosts.getContent();
+
+        List<PostListDataResponseDTO> responseDTOList = list.stream()
+                .map(PostListDataResponseDTO::new)
+                .collect(toList());
+
+        return new MypageResponseDTO(userData, responseDTOList);
+    }
+
+
+    public void deleteUser(String userId){
+        try {
+            postService.deleteUserId(userId);
+            userRepository.deleteById(userId);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+
+    public void updateUserInfo(final String userId, final UserInfoUpdateRequestDTO userInfoUpdateRequestDTO)
+            throws RuntimeException{
+
+        UserEntity entity = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new RuntimeException("수정할 유저가 존재하지 않습니다."));
+        //패스워드 인코딩 (암호화처리)
+        String rawUpPassword = userInfoUpdateRequestDTO.getPassword(); // 평문 비밀번호
+        if(passwordEncoder.matches(userInfoUpdateRequestDTO.getRawPassword(), entity.getUserPassword())) {
+            if (rawUpPassword != null && !passwordEncoder.matches(rawUpPassword, entity.getUserPassword())) {
+                String encodedPassword = passwordEncoder.encode(rawUpPassword); //passwordEncoder 외부 라이브러리를 이용해 비밀번호 암호화 처리
+                entity.setUserPassword(encodedPassword);
+                UserEntity savedUser = userRepository.save(entity); // 위 과정을 저장!
+            } else {
+                throw new RuntimeException("수정 전과 다른 비밀번호를 입력해 주세요.");
+            }
+        }else{
+            throw new RuntimeException("현재 비밀번호가 일치하지 않습니다.");
+        }
+    }
 }
 
 

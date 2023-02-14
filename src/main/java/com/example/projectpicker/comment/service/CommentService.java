@@ -22,13 +22,13 @@ public class CommentService {
 
     // 댓글 생성
     @Transactional
-    public void commentSave(String postId, CommentRequestDTO commentRequestDTO) {
+    public void commentSave(String postId, CommentRequestDTO commentRequestDTO, String userId) {
         PostEntity post = postRepository.findById(postId).orElseThrow(() ->
                 new IllegalArgumentException("댓글 쓰기 실패 - id : " + postId + " 의 게시물이 존재하지 않습니다." ));
 //        commentRequestDTO.setUserEntity(user);
 //        commentRequestDTO.setPostEntity(post);
-        String userEmail = post.getUserEntity().getUserEmail();
-        UserEntity user = userRepository.findByUserEmail(userEmail);
+        UserEntity user = userRepository.findById(userId).orElseThrow(() ->
+                new IllegalArgumentException("사용자를 찾을 수 없습니다." ));
 
         CommentEntity comment = commentRequestDTO.toEntity(user, post);
         commentRepository.save(comment);

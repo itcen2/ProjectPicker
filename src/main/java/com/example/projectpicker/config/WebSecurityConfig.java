@@ -38,7 +38,8 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 // 인증 요청중에서 '/'경로랑 '/api/auth'로 시작되는 경로는 인증하지 않고 모두 허용
-                .authorizeRequests().antMatchers("/", "/auth/**").permitAll()
+                .authorizeRequests().antMatchers("/","/projectpicker/*","/projectpicker", "/auth/**", "/admin/login", "/projectpicker", "/projectpicker/*").permitAll()
+
                 // 그 외의 모든 경로는 인증을 거쳐야함.
                 .anyRequest().authenticated();
 

@@ -23,18 +23,20 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/projectpicker")    // 받을 주소
+@CrossOrigin
 public class PostApiController {
 
     private final PostService postService;
 
-
+    private final String page = "/page/{i}";
 
 
     // 게시글 목록 조회
-    @GetMapping
-    public ResponseEntity<?> list(PageRequestDTO pageRequestDTO) {
+    @GetMapping("/page/{i}")
+    public ResponseEntity<?> list(PageRequestDTO pageRequestDTO,@PathVariable("i") int i) {
         log.info("request page info - {}", pageRequestDTO);
 
+        pageRequestDTO.setPage(i);
         try {
             PostListResponseDTO listResponseDTO = postService.getList(pageRequestDTO);
             return ResponseEntity
@@ -55,9 +57,10 @@ public class PostApiController {
      *  게시판 검색
      *  postman ( http://localhost:8080/projectpicker/search/ 게시판 제목 ) --GET
      */
-    @GetMapping("/search/{string}")
-    public ResponseEntity<?> searchList(PageRequestDTO pageRequestDTO,@PathVariable String string) {
+    @GetMapping("/search/{string}/page/{i}")
+    public ResponseEntity<?> searchList(PageRequestDTO pageRequestDTO,@PathVariable String string, @PathVariable("i") int i) {
         log.info("request page info - {}", pageRequestDTO);
+        pageRequestDTO.setPage(i);
 
         try {
             PostListResponseDTO listResponseDTO = postService.searchList(pageRequestDTO,string);
@@ -80,11 +83,13 @@ public class PostApiController {
      */
 
 
-    @GetMapping("/hashsearch/{keyword1}/{keyword2}")
+    @GetMapping("/hashsearch/{keyword1}/{keyword2}/page/{i}")
     public ResponseEntity<?> hashTagSearch2(PageRequestDTO pageRequestDTO,
                                             @PathVariable String keyword1,
-                                            @PathVariable String keyword2) {
+                                            @PathVariable String keyword2
+            , @PathVariable("i") int i) {
         log.info("request page info - {}", pageRequestDTO);
+        pageRequestDTO.setPage(i);
 
         try {
             PostListResponseDTO listResponseDTO = postService.searchHashTagList2(keyword1, keyword2, pageRequestDTO);
@@ -101,10 +106,12 @@ public class PostApiController {
 
     }
 
-    @GetMapping("/hashsearch/{keyword3}")
+    @GetMapping("/hashsearch/{keyword3}/page/{i}")
     public ResponseEntity<?> hashTagSearch1(PageRequestDTO pageRequestDTO,
-                                            @PathVariable String keyword3) {
+                                            @PathVariable String keyword3
+            , @PathVariable("i") int i) {
         log.info("request page info - {}", pageRequestDTO);
+        pageRequestDTO.setPage(i);
 
         try {
             PostListResponseDTO listResponseDTO = postService.searchHashTagList1(keyword3, pageRequestDTO);
@@ -129,15 +136,14 @@ public class PostApiController {
 
         try {
             PostCommentDetailResponseDTO dto = postService.getDetail(postId);
-
+            log.info(dto.getPostId());
             return ResponseEntity
                     .ok()
                     .body(dto)
                     ;
         } catch (Exception e) {
             return ResponseEntity
-                    .notFound()
-                    .build();
+                    .internalServerError().body(e.getMessage());
         }
 
     }

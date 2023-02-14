@@ -1,6 +1,6 @@
 package com.example.projectpicker.user.controller;
 
-import com.example.projectpicker.post.dto.response.PostDetailResponseDTO;
+import com.example.projectpicker.post.dto.request.PageRequestDTO;
 import com.example.projectpicker.user.dto.*;
 import com.example.projectpicker.user.exception.DuplicatedEmailException;
 import com.example.projectpicker.user.exception.NoRegisteredArgumentsException;
@@ -8,6 +8,7 @@ import com.example.projectpicker.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<?> signup(
             @Validated @RequestBody UserSignUpDTO signUpDTO, BindingResult result
-            ){
+    ){
         log.info("/auth/signup POST - {}", signUpDTO);
 
         if (result.hasErrors()){
@@ -49,25 +50,6 @@ public class UserController {
             return ResponseEntity
                     .badRequest()
                     .body(e.getMessage());
-        }
-    }
-
-    // 비밀번호 수정 요청 처리
-    @RequestMapping(
-            value = "updateUser/{userId}"
-            , method = {RequestMethod.PUT, RequestMethod.PATCH}
-    )
-    public String updateUserInfo(
-            @PathVariable("userId") String userId
-            , @RequestBody UserInfoUpdateRequestDTO requestDTO
-    ) {
-        try {
-            String s = userService.updateUserInfo(userId, requestDTO);
-            return s;
-        } catch (RuntimeException e) {
-            log.error("update fail : caused by - {}", e.getMessage());
-            String s = userService.updateUserInfo(userId, requestDTO);
-            return s;
         }
     }
 
@@ -110,4 +92,46 @@ public class UserController {
         }
     }
 
+    @PostMapping("/myPage")
+    public ResponseEntity<?> getUserData(@Validated @RequestBody MypageRequestDTO mypageRequestDTO, PageRequestDTO pageRequestDTO){
+
+        try {
+            MypageResponseDTO userData = userService.getUserData(mypageRequestDTO, pageRequestDTO);
+            return ResponseEntity
+                    .ok()
+                    .body(userData);
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(LoginResponseDTO.builder()
+                            .message(e.getMessage())
+                            .build()
+                    );
+        }
+    }
+
+    @DeleteMapping("/signout/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable("id") String userId){
+        try {
+            userService.deleteUser(userId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @RequestMapping(
+            value = "updateUser"
+            , method = {RequestMethod.PUT, RequestMethod.PATCH}
+    )
+    public ResponseEntity<?> updateUserInfo(
+            @AuthenticationPrincipal String userId
+            , @RequestBody UserInfoUpdateRequestDTO requestDTO
+    ) {
+        try {
+            userService.updateUserInfo(userId, requestDTO);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

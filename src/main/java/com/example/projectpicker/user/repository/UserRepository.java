@@ -3,8 +3,6 @@ package com.example.projectpicker.user.repository;
 import com.example.projectpicker.user.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
-
 /*
 1. JpaRepository 인터페이스를 상속하기만 하면 인터페이스에 따로 @Repository등의 어노테이션을 추가할 필요 없다.
 +기본적인 Create, Read, Update, Delete가 자동으로 생성된다.
@@ -17,9 +15,6 @@ public interface UserRepository extends JpaRepository <UserEntity,String>{
     // 이메일로 회원을 조회
     // 아래 코드는 sql문으로 다음과 값다. (select * from tbl_user where email = ? )
     UserEntity findByUserEmail(String email);
-
-    // userID로 회원을 조회
-    Optional<UserEntity> findById(String userId);
 
     // 이메일 중복 검사
     // select count(*) from tbl_user where email = ?

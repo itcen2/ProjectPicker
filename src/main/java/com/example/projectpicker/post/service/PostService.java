@@ -21,7 +21,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.xml.stream.events.Comment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +61,7 @@ public class PostService {
 //            throw new RuntimeException("조회 결과가 없습니다.");
 //        }
 //
-//        // 엔터티 리스트를 DTO리스트로 변환해서 클라이언트에 응답
+//        // 엔터티 리스트를 DTO 리스트로 변환해서 클라이언트에 응답
 //        List<PostResponseDTO> responseDTOList = list.stream()
 //                .map(PostResponseDTO::new)
 //                .collect(toList());
@@ -91,25 +90,23 @@ public class PostService {
                 "createDate"
         );
 
-        final Page<PostEntity> pageData = postRepository.findAll(pageable);
+        final Page<PostEntity> pageData = postRepository.findByAllowTrue(pageable);
         List<PostEntity> list = pageData.getContent();
 
         if (list.isEmpty()) {
             throw new RuntimeException("조회 결과가 없습니다.");
         }
 
-        // 엔터티 리스트를 DTO리스트로 변환해서 클라이언트에 응답
-        List<PostResponseDTO> responseDTOList = list.stream()
-                .map(PostResponseDTO::new)
+        // 엔터티 리스트를 DTO 리스트로 변환해서 클라이언트에 응답
+        List<PostListDataResponseDTO> responseDTOList = list.stream()
+                .map(PostListDataResponseDTO::new)
                 .collect(toList());
 
-        PostListResponseDTO listResponseDTO = PostListResponseDTO.builder()
+        return PostListResponseDTO.builder()
                 .count(responseDTOList.size())
-                .pageInfo(new PageResponseDTO<PostEntity>(pageData))
+                .pageInfo(new PageResponseDTO<>(pageData))
                 .posts(responseDTOList)
                 .build();
-
-        return listResponseDTO;
     }
 
 
@@ -133,18 +130,16 @@ public class PostService {
             throw new RuntimeException("조회 결과가 없습니다.");
         }
 
-        // 엔터티 리스트를 DTO리스트로 변환해서 클라이언트에 응답
-        List<PostResponseDTO> responseDTOList = list.stream()
-                .map(PostResponseDTO::new)
+        // 엔터티 리스트를 DTO 리스트로 변환해서 클라이언트에 응답
+        List<PostListDataResponseDTO> responseDTOList = list.stream()
+                .map(PostListDataResponseDTO::new)
                 .collect(toList());
 
-        PostListResponseDTO listResponseDTO = PostListResponseDTO.builder()
+        return PostListResponseDTO.builder()
                 .count(responseDTOList.size())
-                .pageInfo(new PageResponseDTO<PostEntity>(pageData))
+                .pageInfo(new PageResponseDTO<>(pageData))
                 .posts(responseDTOList)
                 .build();
-
-        return listResponseDTO;
     }
 
     /**
@@ -171,18 +166,16 @@ public class PostService {
             throw new RuntimeException("조회 결과가 없습니다.");
         }
 
-        // 엔터티 리스트를 DTO리스트로 변환해서 클라이언트에 응답
-        List<PostResponseDTO> responseDTOList = list.stream()
-                .map(PostResponseDTO::new)
+        // 엔터티 리스트를 DTO 리스트로 변환해서 클라이언트에 응답
+        List<PostListDataResponseDTO> responseDTOList = list.stream()
+                .map(PostListDataResponseDTO::new)
                 .collect(toList());
 
-        PostListResponseDTO listResponseDTO = PostListResponseDTO.builder()
+        return PostListResponseDTO.builder()
                 .count(responseDTOList.size())
-                .pageInfo(new PageResponseDTO<PostEntity>(pageData))
+                .pageInfo(new PageResponseDTO<>(pageData))
                 .posts(responseDTOList)
                 .build();
-
-        return listResponseDTO;
     }
 
 
@@ -206,18 +199,16 @@ public class PostService {
             throw new RuntimeException("조회 결과가 없습니다.");
         }
 
-        // 엔터티 리스트를 DTO리스트로 변환해서 클라이언트에 응답
-        List<PostResponseDTO> responseDTOList = list.stream()
-                .map(PostResponseDTO::new)
+        // 엔터티 리스트를 DTO 리스트로 변환해서 클라이언트에 응답
+        List<PostListDataResponseDTO> responseDTOList = list.stream()
+                .map(PostListDataResponseDTO::new)
                 .collect(toList());
 
-        PostListResponseDTO listResponseDTO = PostListResponseDTO.builder()
+        return PostListResponseDTO.builder()
                 .count(responseDTOList.size())
-                .pageInfo(new PageResponseDTO<PostEntity>(pageData))
+                .pageInfo(new PageResponseDTO<>(pageData))
                 .posts(responseDTOList)
                 .build();
-
-        return listResponseDTO;
     }
 
 
@@ -232,8 +223,7 @@ public class PostService {
                 .orElseThrow(() ->
                         new RuntimeException("게시물이 존재하지 않음!!"));
         List<CommentEntity> comments = commentRepository.getComments(postId);
-
-        // 엔터티를 DTO로 변환
+        // 엔터티를 DTO 로 변환
         return new PostCommentDetailResponseDTO(post, comments);
     }
 
@@ -246,16 +236,18 @@ public class PostService {
             , final String userId) // 강사님이 추가하신 코드 (final String userID)
             throws RuntimeException {
 
-        // dto를 entity변환 작업
+        // dto 를 entity 변환 작업
         final PostEntity entity = createDTO.toEntity();
-
-        UserEntity user = userRepository.findById(userId).get(); // 강사님이 추가하신 코드
+        UserEntity user = userRepository.findById(userId).orElseThrow(() ->
+                new RuntimeException("사용자 정보를 찾을 수 없습니다."));// 강사님이 추가하신 코드
         log.info("user : {}", user); // 강사님이 추가하신 코드 (log 확인)
         entity.setUserEntity(user); // 강사님이 추가하신 코드
+        entity.setUserName(user.getUserName());
+        entity.setUserEmail(user.getUserEmail());
 
         PostEntity savedPost = postRepository.save(entity);
 
-        // hashtag를 db에 저장
+        // hashtag 를 db에 저장
         List<String> hashTags = createDTO.getHashTags();
 
         // 해시태그 문자열 리스트에서 문자열들을 하나하나 추출한 뒤
@@ -274,7 +266,7 @@ public class PostService {
 
 //        savedPost.getUser().addPost(savedPost);
 
-        // 저장된 객체를 DTO로 변환해서 반환
+        // 저장된 객체를 DTO 로 변환해서 반환
         return new PostDetailResponseDTO(savedPost);
     }
 
@@ -298,7 +290,7 @@ public class PostService {
         if (modTitle != null) entity.setPostTitle(modTitle);
         if (modContent != null) entity.setPostContent(modContent);
 
-        if (modStatus != entity.isStatus()) entity.setStatus(modStatus);
+        if (modStatus == entity.isStatus()) entity.setStatus(modStatus);
 
         PostEntity modifyPost = postRepository.save(entity);
 
@@ -315,7 +307,7 @@ public class PostService {
                 hashTagEntities.add(savedTag);
             }
             modifyPost.setHashTags(hashTagEntities);
-        };
+        }
 
         return new PostDetailResponseDTO(modifyPost);
     }
@@ -325,8 +317,16 @@ public class PostService {
      */
     public void delete(final String  postId)
             throws RuntimeException {
-        commentRepository.deletePostId(postId); // 댓글 삭제
+        commentRepository.deleteByPostId(postId);
         hashTagRepository.deletePostId(postId); // 해시태그 삭제
         postRepository.deleteById(postId); // 게시글 삭제
+    }
+
+    public void deleteUserId(final String  userId)
+            throws RuntimeException {
+        List<PostEntity> list = postRepository.getMyPostsList(userId);
+        for (PostEntity postEntity : list) {
+            delete(postEntity.getPostId());
+        }
     }
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @Setter @Getter @ToString(exclude = "PostId")
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id") // id 만 비교해라. 굳이 비번,이름까지 비교할 필요x
+@EqualsAndHashCode(of = "userId") // id 만 비교해라. 굳이 비번,이름까지 비교할 필요x
 @Builder
 @Entity
 @Table(name = "tbl_user")
@@ -44,9 +44,11 @@ public class UserEntity {
      * 게시판 과 관계형 매핑
      */
     @OneToMany(mappedBy = "userEntity")
+    @Builder.Default
     private List<PostEntity> PostId = new ArrayList<>(); //해시태그 목록
 
     @OneToMany(mappedBy = "userEntity", targetEntity = CommentEntity.class)
+    @Builder.Default
     private List<CommentEntity> CommentId = new ArrayList<>();
 
 

@@ -14,15 +14,16 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @Builder
 public class CommentRequestDTO {
-        private String comment;
+    private String comment;
 
-        // 댓글 요청 DTO ( DTO -- > Entity)
-        public CommentEntity toEntity(UserEntity userEntity,PostEntity postEntity) {
-            return  CommentEntity.builder()
-                    .comment(comment)
-                    .userEntity(userEntity)
-                    .postEntity(postEntity)
-                    .build();
+    public CommentEntity toEntity(UserEntity userEntity, PostEntity postEntity) {
+        return  CommentEntity.builder()
+                .comment(comment)
+                .userEntity(userEntity)
+                .userName(userEntity.getUserName())
+                .userEmail(userEntity.getUserEmail())
+                .postEntity(postEntity)
+                .build();
 
-        }
     }
+}

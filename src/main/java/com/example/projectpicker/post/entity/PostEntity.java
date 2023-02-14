@@ -43,8 +43,8 @@ public class PostEntity {
     private LocalDateTime modifyDate; // 게시글 수정 시간
 
     private boolean allow; // 일반 회원이 게시글 등록시, 관리자가 게시글 등록 허용여부에 사용되는 엔티티
-    
-    private boolean status; // 프로젝트 모집중, 마감
+
+    private boolean status; // 모집중, 마감 확인용
 
     /**
      회원 와 관계 설정
@@ -54,20 +54,21 @@ public class PostEntity {
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    @Column(name = "user_name")
     private String userName;
-
+    private String userEmail;
     /**
      해시태그와 관계형 매핑
      */
 
     @OneToMany(mappedBy = "postEntity")
+    @Builder.Default
     private List<HashTagEntity> hashTags = new ArrayList<>(); //해시태그 목록
 
     /**
      * 댓글(comment)와 관계형 매핑
      */
     @OneToMany(mappedBy = "postEntity")
+    @Builder.Default
     private List<CommentEntity> commentEntities = new ArrayList<>();
 
 

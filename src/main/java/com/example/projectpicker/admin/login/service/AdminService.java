@@ -40,9 +40,9 @@ public class AdminService {
         String adminPassword = findEmail.getAdminPassword(); // 관리자 비밀번호
         String inputPassword = adminPostDTO.getAdminPassword(); // 외부로부터 입력된 관리자 비밀번호
 
-            if(!passwordEncoder.matches(inputPassword,adminPassword)){ // 만약 입력한 관리자 비밀번호가 db에 저장된 관리자 비밀번호와 다르다면
-                findEmail.setMessage("비밀번호가 일치하지 않습니다."); // 비밀번호가 일치 않다는 메시지가 설정!
-            }
+        if(!passwordEncoder.matches(inputPassword,adminPassword)){ // 만약 입력한 관리자 비밀번호가 db에 저장된 관리자 비밀번호와 다르다면
+            findEmail.setMessage("비밀번호가 일치하지 않습니다."); // 비밀번호가 일치 않다는 메시지가 설정!
+        }
         UserEntity user = UserEntity.builder()
                 .userId(findEmail.getAdminId())
                 .userEmail(findEmail.getAdminEmail())
@@ -60,7 +60,6 @@ public class AdminService {
         String encodedPassword = passwordEncoder.encode(rawPassword); // 인코딩을 통한 비밀번호 암호화
         adminSignUpDTO.setAdminPassword(encodedPassword); // 암호화된 비밀번호를 adminSignUpDTO(dto->entity) 에 설정
 
-        adminRepository.save(adminSignUpDTO.toEntity());
-
+        AdminEntity save = adminRepository.save(adminSignUpDTO.toEntity());
     }
 }

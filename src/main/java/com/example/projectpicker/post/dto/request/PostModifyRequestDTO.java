@@ -18,9 +18,10 @@ public class PostModifyRequestDTO {
 
     private String title; // 게시판 제목
 
+
     private String content; // 게시판 내용
 
-    private boolean status; // 프로젝트 모집중 마감
+    private List<String> hashTags; // 해시태그
 
-    private List<String> hashTags; // 게시글 해쉬태그
+    private boolean status; // 모집, 마감
 }

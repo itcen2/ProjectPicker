@@ -57,6 +57,6 @@ public class AdminController {
     public ResponseEntity<?> signUp(@Validated @RequestBody AdminSignUpDTO adminSignUpDTO){
         adminService.signUp(adminSignUpDTO);
         return ResponseEntity.ok()
-                .body("성공");
+                .body("계정생성 성공");
     }
 }

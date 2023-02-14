@@ -18,6 +18,11 @@ public class UserInfoUpdateRequestDTO {
 
     @NotBlank
     @Size(min = 8, max = 20) // 8~20자 여야 한다.
-    private String password; // 회원 비밀번호
+    private String password; // 회원 현재 비밀번호
+
+
+    @NotBlank
+    @Size(min = 8, max = 20) // 8~20자 여야 한다.
+    private String updatePassword; // 회원 수정 비밀번호
 
 }

@@ -54,14 +54,20 @@ public class UserService {
         return new UserSignUpResponseDTO(savedUser); // 클라이언트에게 응답결과에는 savedUSer(암호처리된) 정보 반환
     }
 
+    // 비밀번호 번경
     public String updateUserInfo(final String userId, final UserInfoUpdateRequestDTO userInfoUpdateRequestDTO)
             throws RuntimeException{
 
         UserEntity entity = userRepository.findById(userId)
                 .orElseThrow(() ->
                         new RuntimeException("수정할 유저가 존재하지 않습니다."));
+
+        // 비밀번호 검증
+        if(!passwordEncoder.matches(userInfoUpdateRequestDTO.getPassword(),entity.getUserPassword())){
+            throw new RuntimeException("현재 비밀번호가 틀렸습니다.");
+        }
         //패스워드 인코딩 (암호화처리)
-        String rawUpPassword = userInfoUpdateRequestDTO.getPassword(); // 평문 비밀번호
+        String rawUpPassword = userInfoUpdateRequestDTO.getUpdatePassword(); // 평문 비밀번호
         if(rawUpPassword != null && !passwordEncoder.matches(rawUpPassword,entity.getUserPassword())) {
             String encodedPassword = passwordEncoder.encode(rawUpPassword); //passwordEncoder 외부 라이브러리를 이용해 비밀번호 암호화 처리
             entity.setUserPassword(encodedPassword);

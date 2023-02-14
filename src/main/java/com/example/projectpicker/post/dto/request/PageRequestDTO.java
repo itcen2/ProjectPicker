@@ -19,7 +19,7 @@ public class PageRequestDTO {
      */
     public PageRequestDTO(){
         this.page = 1; // 들어가자 마자 페이지 1페이지가 뜨기 때문에
-        this.sizePerPage = 15; // 아래 페이징은 10개씩
+        this.sizePerPage = 10; // 아래 페이징은 10개씩
     }
     public void setPage(int page){
         // 만약 0 미만 또는 최대 값 초과 했을 시 --> 1페이지로 반환

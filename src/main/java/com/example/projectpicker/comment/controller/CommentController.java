@@ -1,5 +1,6 @@
 package com.example.projectpicker.comment.controller;
 
+import com.example.projectpicker.comment.dto.CommentModifyRequestDTO;
 import com.example.projectpicker.comment.dto.CommentRequestDTO;
 import com.example.projectpicker.comment.service.CommentService;
 import com.example.projectpicker.post.service.PostService;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/projectpicker")
-@CrossOrigin(origins = "http://todo-buket.s3-website.ap-northeast-2.amazonaws.com/")
+@CrossOrigin
 public class CommentController {
     private final CommentService commentService;
 
@@ -26,7 +27,7 @@ public class CommentController {
 
     // 댓글 수정
     @PutMapping({"/{id}/comments/{ids}"})
-    public ResponseEntity update(@PathVariable String id, @PathVariable String ids, @RequestBody CommentRequestDTO dto) {
+    public ResponseEntity update(@PathVariable String id, @PathVariable String ids, @RequestBody CommentModifyRequestDTO dto) {
         commentService.update(ids, dto);
         return ResponseEntity.ok().body(postService.getDetail(id));
     }

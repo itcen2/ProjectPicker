@@ -12,7 +12,7 @@ import lombok.ToString;
 public class PageRequestDTO {
 
     private int page; // 요청한 페이지 번호
-    private int sizePerPage; // 한 페이지에 보여줄 데이터 수
+    private int sizePerPage; // 한 페이지당 보여줄 데이터 수(라인 수 or 레코드수)
 
     /*
      *  초기 요청시에 사용할 데이터 세팅

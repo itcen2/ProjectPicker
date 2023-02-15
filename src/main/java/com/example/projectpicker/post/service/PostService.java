@@ -39,60 +39,32 @@ public class PostService {
 
     private final UserRepository userRepository; // 강사님이 추가하신 코드
 
-
-//    /**
-//     * 게시판 검색 (search)
-//     */
-//
-//    @Transactional
-//    public PostListResponseDTO searchList(PageRequestDTO pageRequestDTO, String string) {
-//
-//        Pageable pageable = PageRequest.of(
-//                pageRequestDTO.getPage() - 1,
-//                pageRequestDTO.getSizePerPage(),
-//                Sort.Direction.DESC,
-//                "createDate"
-//        );
-//
-//        final Page<PostEntity> pageData = postRepository.findByPostTitleContaining(string,pageable);
-//        List<PostEntity> list = pageData.getContent();
-//
-//        if (list.isEmpty()) {
-//            throw new RuntimeException("조회 결과가 없습니다.");
-//        }
-//
-//        // 엔터티 리스트를 DTO 리스트로 변환해서 클라이언트에 응답
-//        List<PostResponseDTO> responseDTOList = list.stream()
-//                .map(PostResponseDTO::new)
-//                .collect(toList());
-//
-//        PostListResponseDTO listResponseDTO = PostListResponseDTO.builder()
-//                .count(responseDTOList.size())
-//                .pageInfo(new PageResponseDTO<PostEntity>(pageData))
-//                .posts(responseDTOList)
-//                .build();
-//
-//        return listResponseDTO;
-//    }
-
-
-
     /**
      * 게시글 목록 조회
+     * 1. 사용자가 page(요청한 페이지번호), sizePerPage(한페이지에 보여줄 데이터 수)를 entity로 전달하게 되는데
+     * 이 값을 파라미터로 받음.
+     * 2.
      */
     @Transactional
     public PostListResponseDTO getList(PageRequestDTO pageRequestDTO) {
 
+        /**
+         * 👉 JPA에서 Pageable이라는 객체를 제공
+         * 👉 PageRequest의 메서드
+         * PageRequest.of(int page, int size, Sort sort)
+         *              페이지 번호, 페이지당 데이터의 수, 정렬방향
+         */
         Pageable pageable = PageRequest.of(
-                pageRequestDTO.getPage() - 1,
-                pageRequestDTO.getSizePerPage(),
+                pageRequestDTO.getPage() - 1, // 사용자 화면에선 1페이지, java 에선 0번째
+                pageRequestDTO.getSizePerPage(), // 페이지 당 레코드수. 한 화면에 보여지는 라인수
                 Sort.Direction.DESC,
                 "createDate"
         );
 
         final Page<PostEntity> pageData = postRepository.findByAllowTrue(pageable);
-        List<PostEntity> list = pageData.getContent();
+        List<PostEntity> list = pageData.getContent(); //List<T> getContent(): 조회된 데이터 목록
 
+        //만약 게시판 리스트 목록 데이터가 비어있을때 예외처리
         if (list.isEmpty()) {
             throw new RuntimeException("조회 결과가 없습니다.");
         }
@@ -102,7 +74,7 @@ public class PostService {
                 .map(PostListDataResponseDTO::new)
                 .collect(toList());
 
-        return PostListResponseDTO.builder()
+        return PostListResponseDTO.builder() // PostListResponseDTO(dto <--entity)
                 .count(responseDTOList.size())
                 .pageInfo(new PageResponseDTO<>(pageData))
                 .posts(responseDTOList)
@@ -114,7 +86,9 @@ public class PostService {
      * 특정 검색 리스트 조회 (제목 검색)
      */
     public PostListResponseDTO searchList(PageRequestDTO pageRequestDTO, String string) {
-
+//  * 👉 PageRequest의 메서드
+//         * PageRequest.of(int page, int size, Sort sort)
+//         *              페이지 번호, 페이지당 데이터의 수, 정렬방향
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPage() - 1,
                 pageRequestDTO.getSizePerPage(),

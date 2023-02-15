@@ -1,5 +1,6 @@
 package com.example.projectpicker.comment.service;
 
+import com.example.projectpicker.comment.dto.CommentModifyRequestDTO;
 import com.example.projectpicker.comment.dto.CommentRequestDTO;
 import com.example.projectpicker.comment.entity.CommentEntity;
 import com.example.projectpicker.comment.repository.CommentRepository;
@@ -37,11 +38,11 @@ public class CommentService {
 
     // 댓글 수정
     @Transactional
-    public void update(String id, CommentRequestDTO dto) {
+    public void update(String id, CommentModifyRequestDTO dto) {
         CommentEntity comment = commentRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 댓글이 존재하지 않습니다. " + id));
-
-        comment.update(dto.getComment());
+//        comment.setComment(dto.getComment());
+        commentRepository.save(dto.toEntity(comment));
     }
 
 

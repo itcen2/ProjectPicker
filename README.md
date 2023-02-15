@@ -51,3 +51,14 @@ DB - Repository - service - controller - view
 그 결과를 포함해 응답을 해 주는 디스패처(Dispatcher) 역할
 
 - service: 비지니스 로직을 수행하기 위한 메서드를 정의함
+
+
+---
+[ 빌더 패턴(Builder Pattern)의 장점 ]
+필요한 데이터만 설정할 수 있음
+
+유연성을 확보할 수 있음
+
+가독성을 높일 수 있음
+
+변경 가능성을 최소화할 수 있음

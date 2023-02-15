@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Builder
-public class PostListDataResponseDTO {
+public class PostListDataResponseDTO { //게시판 리스트 데이터 가져오는녀석
 
     private String PostId; // 게시판 식별 코드(아이디)
 

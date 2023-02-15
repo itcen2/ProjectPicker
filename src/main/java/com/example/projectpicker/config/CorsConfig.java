@@ -11,8 +11,8 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         //api cors 정책 설정
         registry.addMapping("/api/**")
-//                .allowedOrigins("http://localhost:3000") // api 요청 허용 URL
-                .allowedOrigins("http://todo-buket.s3-website.ap-northeast-2.amazonaws.com") // api 요청 허용 URL
+                .allowedOrigins("http://localhost:3000") // api 요청 허용 URL
+//                .allowedOrigins("http://todo-buket.s3-website.ap-northeast-2.amazonaws.com") // api 요청 허용 URL
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")
                 .allowCredentials(true)

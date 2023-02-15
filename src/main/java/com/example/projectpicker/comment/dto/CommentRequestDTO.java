@@ -18,6 +18,7 @@ public class CommentRequestDTO {
 
     public CommentEntity toEntity(UserEntity userEntity, PostEntity postEntity) {
         return  CommentEntity.builder()
+//                super(commentEntity)
                 .comment(comment)
                 .userEntity(userEntity)
                 .userName(userEntity.getUserName())
